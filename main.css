@@ -1,0 +1,70 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ########################## */
+/* __________START___________ */
+#start {
+    width: 100%;
+    height: 95vh;
+    
+    background: red;
+    
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "sTitle"
+        "sStart"
+}
+#start .header { grid-area: sTitle; }
+#start .nextButton { grid-area: sStart; }
+
+
+/* ########################## */
+/* __________PRÜFUNG_________ */
+#pruefung {
+    width: 100%;
+    height: 95vh;
+    
+    background: blue;
+    
+    
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "pTitle"
+        "pStart"
+}
+#start .header { grid-area: pTitle; }
+#start .nextButton { grid-area: pStart; }
+
+
+/* ########################## */
+/* ________AUSWERTUNG________ */
+#auswertung {
+    width: 100%;
+    height: 95vh;
+
+    background: yellow;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "aTitle"
+        "aStart"
+}
+#start .header { grid-area: aTitle; }
+#start .nextButton { grid-area: aStart; }
+
+
+
+
+
+
+
+.hid { display: none; background: black; }
