@@ -9,17 +9,23 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <div id="start">
-        <div class="header">Main</div>
-        <button type="button" class="nextButton" id="switchToPruefung">Starte Prüfung</button>
+    <div id="startWrapper" class="wrapper">
+        <div id="start">
+            <div class="header">Main</div>
+            <button type="button" class="nextButton" id="switchToPruefung">Starte Prüfung</button>
+        </div>
     </div>
-    <div id="pruefung" hidden>
-        <div class="header">Prüfung</div>
-        <button type="button" class="nextButton" id="switchToAuswertung">Zur Auswertung</button>
+    <div id="pruefungWrapper" class="wrapper">
+        <div id="pruefung">
+            <div class="header">Prüfung</div>
+            <button type="button" class="nextButton" id="switchToAuswertung">Zur Auswertung</button>
+        </div>
     </div>
-    <div id="auswertung" hidden>
-        <div class="header">Auswertung</div>
-        <button type="button" class="nextButton" id="switchToStart">Zurück zum Hauptmenu</button>
+    <div id="auswertungWrapper" class="wrapper">
+        <div id="auswertung">
+            <div class="header">Auswertung</div>
+            <button type="button" class="nextButton" id="switchToStart">Zurück zum Hauptmenu</button>
+        </div>
     </div>
 </body>
 </html>

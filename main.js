@@ -1,31 +1,31 @@
 window.onload = function() {
 
-    const   DOMstart = document.getElementById('start'),
-            DOMpruefung = document.getElementById('pruefung'),
-            DOMauswertung = document.getElementById('auswertung'),
+    const   DOMstart = document.getElementById('startWrapper'),
+            DOMpruefung = document.getElementById('pruefungWrapper'),
+        DOMauswertung = document.getElementById('auswertungWrapper'),
             DOMswitchToStart = document.getElementById('switchToStart'),
             DOMswitchToPruefung = document.getElementById('switchToPruefung'),
             DOMswitchToAuswertung = document.getElementById('switchToAuswertung');
             
     function switchTo(window = 'start') {
         DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = true;
-        DOMstart.classList.add('hid');
-        DOMpruefung.classList.add('hid');
-        DOMauswerung.classList.add('hid');
+        DOMstart.classList.add('hidden');
+        DOMpruefung.classList.add('hidden');
+        DOMauswertung.classList.add('hidden');
         console.log(`switch to ${window}`);
         
         switch (window) {
             case 'start':
                 DOMstart.hidden = false;
-                DOMstart.classList.remove('hid');
+                DOMstart.classList.remove('hidden');
                 break;
             case 'pruefung':
                 DOMpruefung.hidden = false;
-                DOMpruefung.classList.remove('hid');
+                DOMpruefung.classList.remove('hidden');
                 break;
             case 'auswertung':
                 DOMauswertung.hidden = false;
-                DOMauswertung.classList.remove('hid');
+                DOMauswertung.classList.remove('hidden');
                 break;
         
             default:
@@ -37,4 +37,5 @@ window.onload = function() {
     DOMswitchToPruefung.onclick = () => switchTo('pruefung');
     DOMswitchToAuswertung.onclick = () => switchTo('auswertung');
 
+    switchTo('start');
 }

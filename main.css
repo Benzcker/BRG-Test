@@ -39,8 +39,8 @@ html, body {
         "pTitle"
         "pStart"
 }
-#start .header { grid-area: pTitle; }
-#start .nextButton { grid-area: pStart; }
+#pruefung .header { grid-area: pTitle; }
+#pruefung .nextButton { grid-area: pStart; }
 
 
 /* ########################## */
@@ -58,13 +58,10 @@ html, body {
         "aTitle"
         "aStart"
 }
-#start .header { grid-area: aTitle; }
-#start .nextButton { grid-area: aStart; }
+#auswertung .header { grid-area: aTitle; }
+#auswertung .nextButton { grid-area: aStart; }
 
 
+.wrapper { display: block; }
 
-
-
-
-
-.hid { display: none; background: black; }
+.hidden { display: none; }
