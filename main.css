@@ -1,6 +1,8 @@
 html, body {
     margin: 0;
     padding: 0;
+
+    background: rgb(249, 249, 255);
 }
 
 
@@ -26,21 +28,46 @@ html, body {
 /* ########################## */
 /* __________PRÜFUNG_________ */
 #pruefung {
-    width: 100%;
+    width: 95vw;
     height: 95vh;
+    margin: auto;
+    padding: 5px;
     
-    background: blue;
-    
+    background: rgb(249, 249, 255);
     
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
+    grid-gap: 2px;
+    grid-template-columns: 20% 5% 70% 5%;
+    grid-template-rows: 15% 82.5% 2.5%;
     grid-template-areas: 
-        "pTitle"
-        "pStart"
+        "pLogo pBack pTitle pNext"
+        "pOverview pQuestion pQuestion pQuestion"
+        "pOverview pQuestion pQuestion pQuestion"
 }
-#pruefung .header { grid-area: pTitle; }
-#pruefung .nextButton { grid-area: pStart; }
+
+#pruefung .gridElement {
+    border-radius: 5px;
+    padding: 3px;
+}
+
+#pruefung .logo { grid-area: pLogo; background: blue; }
+#pruefung .back { grid-area: pBack; background: red; }
+#pruefung .header { grid-area: pTitle; background: yellow; text-align: center; font-size: 260%; }
+#pruefung .next { grid-area: pNext; background: red; }
+
+#pruefung .overview { grid-area: pOverview; background: greenyellow; overflow-x: hidden; }
+#pruefung .overview ul li { color: black; }
+#pruefung .overview ul li:hover { font-size: 105%; }
+#pruefung .overview ul li.answered { color: rgb(0, 0, 207); }
+#pruefung .overview ul li.selected { border: 2px solid black; }
+#pruefung .overview ul li.selected:hover { font-size: 100%; }
+
+#pruefung .question { 
+    grid-area: pQuestion; 
+    background: rgb(249, 249, 255); 
+    padding: 10px;
+}
+#pruefung .endButton { /* grid-area: pEnd;  */ background: rgb(179, 0, 0); float: right; }
 
 
 /* ########################## */
