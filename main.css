@@ -37,12 +37,12 @@ html, body {
     
     display: grid;
     grid-gap: 2px;
-    grid-template-columns: 20% 5% 70% 5%;
+    grid-template-columns: 20% 80%;
     grid-template-rows: 15% 82.5% 2.5%;
     grid-template-areas: 
-        "pLogo pBack pTitle pNext"
-        "pOverview pQuestion pQuestion pQuestion"
-        "pOverview pQuestion pQuestion pQuestion"
+        "pLogo pTitle"
+        "pOverview pQuestion"
+        "pOverview pQuestion"
 }
 
 #pruefung .gridElement {
@@ -51,23 +51,40 @@ html, body {
 }
 
 #pruefung .logo { grid-area: pLogo; background: blue; }
-#pruefung .back { grid-area: pBack; background: red; }
-#pruefung .header { grid-area: pTitle; background: yellow; text-align: center; font-size: 260%; }
-#pruefung .next { grid-area: pNext; background: red; }
+#pruefung .header { grid-area: pTitle; 
+    /* background: yellow; */ 
+    text-align: center; 
+    font-size: 260%; 
+    padding-top: 2.5%;
+}
+#pruefung .header h1 {  }
+#pruefung .header button { width: 100px; height: 60%; 
+    background: rgb(104, 255, 84); 
+    border-width: 0; 
+}
+#pruefung .header button:hover { background: rgb(174, 255, 171); }
+#pruefung .header button:focus { background: rgb(157, 255, 171); }
 
-#pruefung .overview { grid-area: pOverview; background: greenyellow; overflow-x: hidden; }
+#pruefung .overview { grid-area: pOverview; background: rgb(193, 225, 255); overflow-x: hidden; }
 #pruefung .overview ul li { color: black; }
-#pruefung .overview ul li:hover { font-size: 105%; }
+#pruefung .overview ul li:hover { font-size: 105%; cursor: pointer; }
 #pruefung .overview ul li.answered { color: rgb(0, 0, 207); }
 #pruefung .overview ul li.selected { border: 2px solid black; }
-#pruefung .overview ul li.selected:hover { font-size: 100%; }
+#pruefung .overview ul li.selected:hover { font-size: 100%; cursor: default; }
 
 #pruefung .question { 
     grid-area: pQuestion; 
     background: rgb(249, 249, 255); 
     padding: 10px;
 }
-#pruefung .endButton { /* grid-area: pEnd;  */ background: rgb(179, 0, 0); float: right; }
+#pruefung .endButton { /* grid-area: pEnd;  */ 
+    background: rgb(86, 233, 56); 
+    float: right; 
+
+    width: 200px;
+    height: 70px;
+    border-radius: 2px;
+}
 
 
 /* ########################## */

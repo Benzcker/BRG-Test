@@ -2,11 +2,15 @@ window.onload = function() {
 
     const   DOMstart = document.getElementById('startWrapper'),
             DOMpruefung = document.getElementById('pruefungWrapper'),
-        DOMauswertung = document.getElementById('auswertungWrapper'),
+            DOMauswertung = document.getElementById('auswertungWrapper'),
             DOMswitchToStart = document.getElementById('switchToStart'),
             DOMswitchToPruefung = document.getElementById('switchToPruefung'),
-            DOMswitchToAuswertung = document.getElementById('switchToAuswertung');
-            
+            DOMswitchToAuswertung = document.getElementById('switchToAuswertung'),
+            DOMprevQuest = document.getElementById('prevQuest'),
+            DOMnextQuest = document.getElementById('nextQuest');
+    
+    let selectedQuest = 0;        
+    
     function switchTo(window = 'start') {
         DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = true;
         DOMstart.classList.add('hidden');
@@ -22,6 +26,7 @@ window.onload = function() {
             case 'pruefung':
                 DOMpruefung.hidden = false;
                 DOMpruefung.classList.remove('hidden');
+                gotoQuest(0);
                 break;
             case 'auswertung':
                 DOMauswertung.hidden = false;
@@ -36,6 +41,14 @@ window.onload = function() {
     DOMswitchToStart.onclick = () => switchTo('start');
     DOMswitchToPruefung.onclick = () => switchTo('pruefung');
     DOMswitchToAuswertung.onclick = () => switchTo('auswertung');
+
+    function gotoQuest(ind) {
+        selectedQuest = ind;
+        console.log(`Go to quest ${selectedQuest}`);
+    }
+
+    DOMprevQuest.onclick = () => gotoQuest(selectedQuest-1);
+    DOMnextQuest.onclick = () => gotoQuest(selectedQuest+1);
 
     switchTo('start');
 }
