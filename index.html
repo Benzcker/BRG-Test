@@ -9,6 +9,7 @@
     <script src="main.js"></script>
 </head>
 <body>
+    <!-- HAUPTMENU -->
     <section id="startWrapper" class="wrapper">
         <div id="start">
             <div class="header">Main</div>
@@ -16,39 +17,24 @@
         </div>
     </section>
 
-
+    <!-- PRÜFUNG -->
     <section id="pruefungWrapper" class="wrapper">
         <div id="pruefung">
             <div class="gridElement logo">logo</div>
             <div class="gridElement header">
-                <button id="prevQuest"><-</button> Frage 5 <button id="nextQuest">-></button>
+                <button id="prevQuest" type="button">&#10148;</button> <h1 id="questionHeader">Frage <span id="questionNum">5</span></h1> <button id="nextQuest">&#10148;</button>
             </div>
-            <div class="gridElement overview">
-                Overview <br>
-                <ul>
-                    <li class="answered">1: Was ist ein dummer Kuchen?</li>
-                    <li class="answered">2: Wann essen wir endlich?</li>
-                    <li>3: Was macht ein echter Ritter?</li>
-                    <li class="answered">4: Warum werde ich nicht fertig?</li>
-                    <li class="selected">5: Welche Farbe hat d. Waffenrock?</li>
-                    <li>6: Wie lange dauert das noch?</li>
-                    <li>7: Was ist hier nicht richtig?</li>
-                </ul>
-            </div>
-            <div class="gridElement question">
-                <h1>Welche Farbe hat d. Waffenrock?</h1>
-                <ul>
-                    <li>rot</li>
-                    <li>grün</li>
-                    <li>blau</li>
-                    <li>schwarz</li>
-                </ul>
-                <button type="button" class="endButton" id="switchToAuswertung">Zur Auswertung</button>
-            </div>
+            <div class="gridElement overview" id="overview"></div>
+            <div class="gridElement question" id="question"></div>
+        </div>
+        <div class="endButtonWrapper" hidden>
+            <div class="endDescription">Du bist mit deiner Prüfung fertig. Sage nun deinen Hauptmann Bescheid oder gehe noch einmal die Fragen durch. </div>
+            <input type="password" id="auswertungsPsw" placeholder="Passwort"/><br>
+            <button type="button" class="endButton" id="switchToAuswertung">Zur Auswertung</button>
         </div>
     </section>
 
-
+    <!-- AUSWERTUNG -->
     <section id="auswertungWrapper" class="wrapper">
         <div id="auswertung">
             <div class="header">Auswertung</div>
