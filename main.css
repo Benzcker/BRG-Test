@@ -61,7 +61,7 @@ button:hover { cursor: pointer; }
 }
 #pruefung .header h1 { display: inline; position: relative; top: 1vh; }
 #pruefung .header button { width: 100px; height: 60%; 
-    background: rgb(104, 255, 84); 
+    background: rgb(31, 100, 190); 
     border-width: 0;
     transition: all 100ms;
     font-size: 120%;
