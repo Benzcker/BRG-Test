@@ -95,6 +95,8 @@ button:hover { cursor: pointer; }
     background: rgb(122, 255, 95); 
 }
 .endButtonWrapper { text-align: center; margin-top: 10vh; }
+.endButtonWrapper .answeredQuestions { font-size: 300%; margin-bottom: 4vh; color: red; }
+.endButtonWrapper .answeredQuestions.alldone { color: green; }
 .endButtonWrapper .endDescription {
     margin-bottom: 8vh;
     font-size: 130%;

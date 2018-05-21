@@ -42,19 +42,21 @@ function shuffle(array) {
 
 window.onload = function() {
 
-    const   DOMstart                = document.getElementById('startWrapper'),
-            DOMpruefung             = document.getElementById('pruefungWrapper'),
-            DOMauswertung           = document.getElementById('auswertungWrapper'),
-            DOMswitchToStart        = document.getElementById('switchToStart'),
-            DOMswitchToPruefung     = document.getElementById('switchToPruefung'),
-            DOMswitchToAuswertung   = document.getElementById('switchToAuswertung'),
-            DOMprevQuest            = document.getElementById('prevQuest'),
-            DOMnextQuest            = document.getElementById('nextQuest'),
-            DOMquestionHeader       = document.getElementById('questionHeader'),
-            DOMquestion             = document.getElementById('question'),
-            DOMquestionNum          = document.getElementById('questionNum'),
-            DOMauswertungsPsw       = document.getElementById('auswertungsPsw'),
-            DOMoverview             = document.getElementById('overview');
+    const   DOMstart                    = document.getElementById('startWrapper'),
+            DOMpruefung                 = document.getElementById('pruefungWrapper'),
+            DOMauswertung               = document.getElementById('auswertungWrapper'),
+            DOMswitchToStart            = document.getElementById('switchToStart'),
+            DOMswitchToPruefung         = document.getElementById('switchToPruefung'),
+            DOMswitchToAuswertung       = document.getElementById('switchToAuswertung'),
+            DOMprevQuest                = document.getElementById('prevQuest'),
+            DOMnextQuest                = document.getElementById('nextQuest'),
+            DOMquestionHeader           = document.getElementById('questionHeader'),
+            DOMquestion                 = document.getElementById('question'),
+            DOMquestionNum              = document.getElementById('questionNum'),
+            DOMauswertungsPsw           = document.getElementById('auswertungsPsw'),
+            DOMoverview                 = document.getElementById('overview'),
+            DOMendDescriptionReady      = document.getElementById('endDescriptionReady'),
+            DOMendNotReady              = document.getElementById('endNotReady');
     
     let selectedQuest = 0;
     // Hier quests laden
@@ -139,6 +141,21 @@ window.onload = function() {
             // Endscreen
             DOMquestion.innerHTML = '';
             DOMquestion.appendChild(switchParent);
+
+            const answQuests = quests.filter(q => {return q.selected}).length;
+            const allAnswered = answQuests == quests.length;
+            const DOMbeantwFragen = switchParent.childNodes.item(1);
+            const answQuestsString = allAnswered ? 'alle' : (`${answQuests} von ${quests.length}`);
+            DOMbeantwFragen.innerText = `Du hast ${answQuestsString} Fragen beantwortet.`;
+            DOMendDescriptionReady.hidden = !allAnswered;
+            DOMendNotReady.hidden = !DOMendDescriptionReady.hidden;
+
+            if (allAnswered) {
+                DOMbeantwFragen.classList.add('alldone');
+            } else {
+                DOMbeantwFragen.classList.remove('alldone');
+            }
+
             DOMnextQuest.classList.add('invisible');
             DOMquestionHeader.classList.add('invisible');
             
