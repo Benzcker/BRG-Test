@@ -22,7 +22,7 @@
         <div id="pruefung">
             <div class="gridElement logo">logo</div>
             <div class="gridElement header">
-                <button id="prevQuest" type="button">&#10148;</button> <h1 id="questionHeader">Frage <span id="questionNum">5</span></h1> <button id="nextQuest">&#10148;</button>
+                <button id="prevQuest" type="button">&#10148;</button> <h1 id="questionHeader">Frage <span id="questionNum"></span></h1> <button id="nextQuest">&#10148;</button>
             </div>
             <div class="gridElement overview" id="overview"></div>
             <div class="gridElement question" id="question"></div>
@@ -39,8 +39,13 @@
     <!-- AUSWERTUNG -->
     <section id="auswertungWrapper" class="wrapper">
         <div id="auswertung">
-            <div class="header">Auswertung</div>
-            <button type="button" class="nextButton" id="switchToStart">Zurück zum Hauptmenu</button>
+            <div class="header"><h1>Auswertung</h1></div>
+            <div class="aQuests" id="auswQuests"></div>
+            <div class="aFinal">
+                <div class="evaluation" id="evaluation"></div>
+                <div class="result" id="result"></div>
+                <button type="button" class="mainMenuButton" id="switchToStart">Zurück zum Hauptmenu</button>
+            </div>
         </div>
     </section>
 </body>

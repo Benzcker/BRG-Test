@@ -8,7 +8,16 @@ class Quest {
         this.selected = null;
     }
 
-    getHTMLText() {
+    get correctAnswered() {
+        return this.selected == this.answer;
+    }
+
+    reset() {
+        this.selected = null;
+        this.shuffledAnswers = null;
+    }
+
+    getTestHTMLText() {
         if (this.HTMLText) return this.HTMLText;
         let answersString = '';
         this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat([this.answer]));
@@ -18,6 +27,18 @@ class Quest {
             <label for="answ_${answer}">${answer}</label><br>`;
 
         return `<h1>${this.text}</h1><form id="answers">${answersString}</form>`;
+    }
+
+    getAuswertungHTMLText(ind) {
+        const right = this.correctAnswered ? 'right' : '';
+        let auswertungHTML = `
+                <div class="aQuestWrapper">
+                    <div class="aQuest">${ind+1}. ${this.text}</div>
+                    <div class="aAnswer ${right}">${this.selected ? this.selected : '&#10134;'}</div>
+                    <div class="aTrue">${right ? '' : this.answer}</div>
+                    <div class="aRight ${right}">${right ? '&#10004;' : '&#10008;'}</div>
+                </div>`;
+        return auswertungHTML;
     }
 }
 
@@ -56,7 +77,10 @@ window.onload = function() {
             DOMauswertungsPsw           = document.getElementById('auswertungsPsw'),
             DOMoverview                 = document.getElementById('overview'),
             DOMendDescriptionReady      = document.getElementById('endDescriptionReady'),
-            DOMendNotReady              = document.getElementById('endNotReady');
+            DOMendNotReady              = document.getElementById('endNotReady'),
+            DOMauswQuests               = document.getElementById('auswQuests'),
+            DOMevaluation               = document.getElementById('evaluation'),
+            DOMresult                   = document.getElementById('result');
     
     let selectedQuest = 0;
     // Hier quests laden
@@ -69,12 +93,13 @@ window.onload = function() {
         new Quest('Wie lange dauert das noch?', 'Für immer', ['1h', '5h', '14.5 Tage']),
         new Quest('Was ist hier nicht richtig?', 'Ich lerne nicht für Prüfungen', ['Deine Frisur', 'Deine Antworten']),
     ];
+    const maxFehler = 2;
 
     // Passwort, um Auswertung ansehen zu können
     let auswertungsPsw = 'Kuchen';
     
-    function switchTo(window = 'start') {
-        if (window == 'auswertung' && auswertungsPsw != DOMauswertungsPsw.value) {
+    function switchTo(window = 'start', force=false) {
+        if (window == 'auswertung' && auswertungsPsw != DOMauswertungsPsw.value && !force) {
             DOMauswertungsPsw.value = '';
             DOMauswertungsPsw.classList.add('wrong');
             DOMauswertungsPsw.focus();
@@ -93,16 +118,19 @@ window.onload = function() {
             case 'start':
                 DOMstart.hidden = false;
                 DOMstart.classList.remove('hidden');
+                resetQuests();
                 break;
             case 'pruefung':
                 DOMpruefung.hidden = false;
                 DOMpruefung.classList.remove('hidden');
+                generateOverview();
                 gotoQuest(0);
                 break;
             case 'auswertung':
                 DOMauswertung.hidden = false;
                 DOMauswertung.classList.remove('hidden');
                 DOMauswertungsPsw.value = '';
+                generateAuswertung();
                 break;
         
             default:
@@ -124,11 +152,13 @@ window.onload = function() {
         if(selectedQuest < quests.length) document.getElementById('overviewNr' + selectedQuest).classList.remove('selected');
         const answers = document.getElementsByName('answer');
         let selected;
-        answers.forEach(elem => {
-            if (selected) return;
+        for(const elem of answers) {
             selected = elem.checked;
-            if (selected) quests[selectedQuest].selected = elem.value;            
-        });
+            if (selected) {
+                quests[selectedQuest].selected = elem.value;
+                break;
+            }            
+        }
         if (selected) {
             document.getElementById('overviewNr'+selectedQuest).classList.add('answered');
         }
@@ -159,6 +189,8 @@ window.onload = function() {
             DOMnextQuest.classList.add('invisible');
             DOMquestionHeader.classList.add('invisible');
             
+            DOMauswertungsPsw.focus();
+
             return;
         }
         
@@ -167,7 +199,7 @@ window.onload = function() {
         DOMquestionHeader.classList.remove('invisible');
         document.getElementById('overviewNr' + (selectedQuest)).classList.add('selected');
 
-        DOMquestion.innerHTML = quests[selectedQuest].getHTMLText();
+        DOMquestion.innerHTML = quests[selectedQuest].getTestHTMLText();
         DOMquestionNum.innerText = selectedQuest + 1;
 
         if (selectedQuest == 0) {
@@ -189,6 +221,36 @@ window.onload = function() {
         DOMoverview.innerHTML = `<ol>${questionsString}</ol>`;
     }
 
-    generateOverview();
+
+
+    //////// AUSWERTUNG ///////////
+    function generateAuswertung() {
+        DOMauswQuests.innerHTML = '';
+        let rightAnswered = 0;
+        quests.forEach((quest, ind) => {
+            auswQuests.innerHTML += quest.getAuswertungHTMLText(ind);
+            rightAnswered += quest.correctAnswered | 0; // "| 0" macht Boolean zu Integer (1 oder 0)
+        });
+        DOMevaluation.innerText = rightAnswered + '/' + quests.length;
+        if(quests.length - rightAnswered <= maxFehler) {
+            // Bestanden
+            DOMresult.innerText = 'Bestanden!'
+            DOMresult.classList.add('right');
+        } else {
+            // Nicht Bestanden
+            DOMresult.innerText = 'Nicht bestanden!'
+            DOMresult.classList.remove('right');
+        }
+    }
+
+    function resetQuests() {
+        for(const quest of quests) {
+            quest.reset();
+        }
+    }
+
+
+
+    //////// INITIALISIERUNG ///////////
     switchTo('start');
 }

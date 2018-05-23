@@ -113,20 +113,83 @@ button:hover { cursor: pointer; }
 /* ________AUSWERTUNG________ */
 #auswertung {
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
 
-    background: yellow;
+    background: rgb(249, 249, 255);;
+
+}
+#auswertung .header { 
+    height: 4rem;
+
+    border-bottom: 3px solid black;
+    margin-bottom: 1rem;
+    font-size: 130%;
+    padding-left: 1rem;
+    position: relative;
+    top: -1rem;
+}
+#auswertung .aQuests { 
+    grid-area: aQuests;
+    background: #565dbb;
+    border-radius: 1rem;
+    width: 100%;
+    border-bottom: 3px solid black;
+    border-top: 2px solid black;
+
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+#auswertung .aQuests .aQuestWrapper {
+    display: block;
+    min-height: 2.5rem;
+    width: 99%;
+    margin: 0.25rem;
+    border: 2px groove black;
+    border-radius: 0.5rem;
+    padding-top: 0.5rem;
+    font-size: 1.5rem;
+    
+    display: grid;
+    grid-template-columns: 50% 20% 20% 10%;
+    grid-template-rows: 100%;
+}
+
+#auswertung .aAnswer { color: red; }
+#auswertung .aAnswer.right { color: rgb(45, 255, 45); }
+#auswertung .aTrue { color: rgb(45, 255, 45); }
+#auswertung .aRight { color: red; }
+#auswertung .aRight.right { color: rgb(45, 255, 45); }
+
+
+#auswertung .aFinal { 
+    height: 4rem;
+    font-size: 2rem;
 
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas: 
-        "aTitle"
-        "aStart"
+    grid-template-columns: 30% 30% 40%;
+    text-align: center;
 }
-#auswertung .header { grid-area: aTitle; }
-#auswertung .nextButton { grid-area: aStart; }
+#auswertung .aFinal .evaluation { margin: 1rem; }
+#auswertung .aFinal .result { color: red; margin: 1rem; }
+#auswertung .aFinal .result.right { color: green; }
 
+
+#auswertung .mainMenuButton {
+    background: rgb(86, 233, 56);
+    margin: 0.5rem;
+
+    border-radius: 1vh;
+    border-width: 0;
+}
+#auswertung .mainMenuButton:hover {
+    background: rgb(122, 255, 95); 
+}
+
+
+
+/* ########################## */
+/* __________GENERAL_________ */
 
 .wrapper { display: block; }
 
