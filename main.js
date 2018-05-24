@@ -24,7 +24,7 @@ class Quest {
         for (const answer of this.shuffledAnswers) answersString += `
             <input type="radio" name="answer" id="answ_${answer}" value="${answer}" 
             ${this.selected == answer ? 'checked' : ''}> 
-            <label for="answ_${answer}">${answer}</label><br>`;
+            <label for="answ_${answer}"><span><span></span></span>${answer}</label><br>`;
 
         return `<h1>${this.text}</h1><form id="answers">${answersString}</form>`;
     }
