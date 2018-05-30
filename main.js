@@ -1,67 +1,79 @@
-// Kein import, weils ja nicht aufm Server ist... :(
-class Quest {
-    constructor(text, answer, wrongAnswers) {
-        this.text = text;
-        this.answer = answer;
-        this.wrongAnswers = wrongAnswers;
-        this.shuffledAnswers = null;
-        this.selected = null;
-    }
-
-    get correctAnswered() {
-        return this.selected == this.answer;
-    }
-
-    reset() {
-        this.selected = null;
-        this.shuffledAnswers = null;
-    }
-
-    getTestHTMLText() {
-        if (this.HTMLText) return this.HTMLText;
-        let answersString = '';
-        this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat([this.answer]));
-        for (const answer of this.shuffledAnswers) answersString += `
-            <input type="radio" name="answer" id="answ_${answer}" value="${answer}" 
-            ${this.selected == answer ? 'checked' : ''}> 
-            <label for="answ_${answer}"><span><span></span></span>${answer}</label><br>`;
-
-        return `<h1>${this.text}</h1><form id="answers">${answersString}</form>`;
-    }
-
-    getAuswertungHTMLText(ind) {
-        const right = this.correctAnswered ? 'right' : '';
-        let auswertungHTML = `
-                <div class="aQuestWrapper">
-                    <div class="aQuest">${ind+1}. ${this.text}</div>
-                    <div class="aAnswer ${right}">${this.selected ? this.selected : '&#10134;'}</div>
-                    <div class="aTrue">${right ? '' : this.answer}</div>
-                    <div class="aRight ${right}">${right ? '&#10004;' : '&#10008;'}</div>
-                </div>`;
-        return auswertungHTML;
-    }
-}
-
-function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
 
 window.onload = function() {
+    
+    // Kein import, weils ja nicht aufm Server ist... :(
+    class Quest {
+        constructor(text, answer, wrongAnswers) {
+            this.text = text;
+            this.answer = answer;
+            this.wrongAnswers = wrongAnswers;
+            this.shuffledAnswers = null;
+            this.selected = null;
+            this.setRight = null;
+        }
+    
+        get correctAnswered() {
+            return this.selected == this.answer;
+        }
+        isPoint() {
+            return  typeof(this.setRight)==='boolean' ? this.setRight : (this.setRight = this.correctAnswered);
+        }
+    
+        reset() {
+            this.selected = null;
+            this.shuffledAnswers = null;
+            this.setRight = null;
+        }
+    
+        getTestHTMLText() {
+            if (this.HTMLText) return this.HTMLText;
+            let answersString = '';
+            this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat([this.answer]));
+            for (const answer of this.shuffledAnswers) answersString += `
+                <input type="radio" name="answer" id="answ_${answer}" value="${answer}" 
+                ${this.selected == answer ? 'checked' : ''}> 
+                <label for="answ_${answer}"><span><span></span></span>${answer}</label><br>`;
+    
+            return `<h1>${this.text}</h1><form id="answers">${answersString}</form>`;
+        }
+    
+        getAuswertungHTMLText(ind) {
+            const right = this.isPoint() ? 'right' : '';
+            const correct = this.correctAnswered ? 'right' : '';
+            let auswertungHTML = `
+                    <div class="aQuestWrapper">
+                        <div class="aQuest">${ind+1}. ${this.text}</div>
+                        <div class="aAnswer ${correct}">${this.selected ? this.selected : '&#10134;'}</div>
+                        <div class="aTrue">${this.answer}</div>
+                        <div class="aRight ${right}" onclick="correctQuest${ind}()">${right ? '&#10004;' : '&#10008;'}</div>
+                    </div>`;
+            window['correctQuest' + ind] = () => {
+                this.setRight = !this.setRight;
+                generateAuswertung();
+            }
+            return auswertungHTML;
+        }
+    }
+    
+    function shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+    
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+    
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+    
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+    
+        return array;
+    }
+
 
     const   DOMstart                    = document.getElementById('startWrapper'),
             DOMpruefung                 = document.getElementById('pruefungWrapper'),
@@ -229,7 +241,7 @@ window.onload = function() {
         let rightAnswered = 0;
         quests.forEach((quest, ind) => {
             auswQuests.innerHTML += quest.getAuswertungHTMLText(ind);
-            rightAnswered += quest.correctAnswered | 0; // "| 0" macht Boolean zu Integer (1 oder 0)
+            rightAnswered += quest.isPoint() | 0; // "| 0" macht Boolean zu Integer (1 oder 0)
         });
         DOMevaluation.innerText = rightAnswered + '/' + quests.length;
         if(quests.length - rightAnswered <= maxFehler) {
@@ -253,4 +265,6 @@ window.onload = function() {
 
     //////// INITIALISIERUNG ///////////
     switchTo('start');
+    // switchTo('pruefung', true);
+    switchTo('auswertung', true);
 }

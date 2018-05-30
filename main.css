@@ -121,13 +121,15 @@ button:hover { cursor: pointer; }
 #auswertung .header { 
     height: 4rem;
 
-    border-bottom: 3px solid black;
+    /* border-bottom: 3px solid black; */
     margin-bottom: 1rem;
     font-size: 130%;
     padding-left: 1rem;
     position: relative;
     top: -1rem;
 }
+#auswertung .header hr { height: 0; background: none; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.7); width: 95%; }
+
 #auswertung .aQuests { 
     grid-area: aQuests;
     background: #565dbb;
