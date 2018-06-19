@@ -3,9 +3,9 @@ window.onload = function() {
     
     // Kein import, weils ja nicht aufm Server ist... :(
     class Quest {
-        constructor(text, answer, wrongAnswers) {
+        constructor(text, answers, wrongAnswers) {
             this.text = text;
-            this.answer = answer;
+            this.answers = answers;
             this.wrongAnswers = wrongAnswers;
             this.shuffledAnswers = null;
             this.selected = null;
@@ -13,10 +13,10 @@ window.onload = function() {
         }
     
         get correctAnswered() {
-            return this.selected == this.answer;
+            return this.answers.includes(this.selected);
         }
         isPoint() {
-            return  typeof(this.setRight)==='boolean' ? this.setRight : (this.setRight = this.correctAnswered);
+            return typeof(this.setRight)==='boolean' ? this.setRight : (this.setRight = this.correctAnswered);
         }
     
         reset() {
@@ -28,7 +28,7 @@ window.onload = function() {
         getTestHTMLText() {
             if (this.HTMLText) return this.HTMLText;
             let answersString = '';
-            this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat([this.answer]));
+            this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat(this.answers));
             for (const answer of this.shuffledAnswers) answersString += `
                 <input type="radio" name="answer" id="answ_${answer}" value="${answer}" 
                 ${this.selected == answer ? 'checked' : ''}> 
@@ -44,7 +44,7 @@ window.onload = function() {
                     <div class="aQuestWrapper">
                         <div class="aQuest">${ind+1}. ${this.text}</div>
                         <div class="aAnswer ${correct}">${this.selected ? this.selected : '&#10134;'}</div>
-                        <div class="aTrue">${this.answer}</div>
+                        <div class="aTrue">${this.getAuswertungTrues()}</div>
                         <div class="aRight ${right}" onclick="correctQuest${ind}()">${right ? '&#10004;' : '&#10008;'}</div>
                     </div>`;
             window['correctQuest' + ind] = () => {
@@ -52,6 +52,12 @@ window.onload = function() {
                 generateAuswertung();
             }
             return auswertungHTML;
+        }
+
+        getAuswertungTrues() {
+            let str = '';
+            for(const ind in this.answers) str += this.answers[ind] + (ind < this.answers.length-1 ? ', ':'');
+            return str;
         }
     }
     
@@ -97,13 +103,13 @@ window.onload = function() {
     let selectedQuest = 0;
     // Hier quests laden
     const quests = [
-        new Quest('Was ist ein dummer Kuchen?', 'Beton', ['Erdbeere', 'Schokolade']),
-        new Quest('Wann essen wir endlich?', 'niemals', ['8:00', '12:00', '18:00']),
-        new Quest('Was macht ein echter Ritter?', 'Kämpfen', ['Tanzen', 'Singen', 'Lachen']),
-        new Quest('Warum werde ich nicht fertig?', 'Nicht genug Bemühung', ['Internet', 'Ablenkung', 'Schule']),
-        new Quest('Welche Farbe hat d. Waffenrock?', 'Blau', ['Rot', 'Grün', 'Schwarz']),
-        new Quest('Wie lange dauert das noch?', 'Für immer', ['1h', '5h', '14.5 Tage']),
-        new Quest('Was ist hier nicht richtig?', 'Ich lerne nicht für Prüfungen', ['Deine Frisur', 'Deine Antworten']),
+        new Quest('Was ist ein dummer Kuchen?', ['Beton'], ['Erdbeere', 'Schokolade']),
+        new Quest('Wann essen wir endlich?', ['niemals'], ['8:00', '12:00', '18:00']),
+        new Quest('Was macht ein echter Ritter?', ['Kämpfen', 'Schminken'], ['Tanzen', 'Singen', 'Lachen']),
+        new Quest('Warum werde ich nicht fertig?', ['Nicht genug Bemühung'], ['Internet', 'Ablenkung', 'Schule']),
+        new Quest('Welche Farbe hat d. Waffenrock?', ['Blau'], ['Rot', 'Grün', 'Schwarz']),
+        new Quest('Wie lange dauert das noch?', ['Für immer'], ['1h', '5h', '14.5 Tage']),
+        new Quest('Was ist hier nicht richtig?', ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
     ];
     const maxFehler = 2;
 
