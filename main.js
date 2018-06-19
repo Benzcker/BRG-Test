@@ -1,6 +1,16 @@
 
 window.onload = function() {
     
+    String.prototype.hashCode = function () {
+        let hash = 0;
+        if (this.length === 0) return hash;
+        for (const chr of this) {
+            hash = ((hash << 5) - hash) + chr.charCodeAt(0);
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    };
+
     // Kein import, weils ja nicht aufm Server ist... :(
     class Quest {
         constructor(text, answers, wrongAnswers) {
@@ -114,10 +124,10 @@ window.onload = function() {
     const maxFehler = 2;
 
     // Passwort, um Auswertung ansehen zu können
-    let auswertungsPsw = 'Kuchen';
+    let auswertungsPswHash = -2036676520;
     
     function switchTo(window = 'start', force=false) {
-        if (window == 'auswertung' && auswertungsPsw != DOMauswertungsPsw.value && !force) {
+        if (window == 'auswertung' && auswertungsPswHash != DOMauswertungsPsw.value.hashCode() && !force) {
             DOMauswertungsPsw.value = '';
             DOMauswertungsPsw.classList.add('wrong');
             DOMauswertungsPsw.focus();
