@@ -82,6 +82,13 @@ button:hover { cursor: pointer; }
     background: rgb(249, 249, 255); 
     padding: 10px;
 }
+#pruefung .question .fieldQuestInput {
+    width: 30rem; height: 1.4rem;
+    font-size: 1em;
+    margin: 0.2rem;
+    padding: 0.2rem;
+}
+
 .endButton { /* grid-area: pEnd;  */ 
     background: rgb(86, 233, 56); 
     /* float: right;  */
@@ -158,10 +165,14 @@ button:hover { cursor: pointer; }
 }
 
 #auswertung .aAnswer { color: red; }
-#auswertung .aAnswer.right { color: rgb(45, 255, 45); }
+#auswertung .aAnswer.right,
+#auswertung .aAnswer .right 
+{ color: rgb(45, 255, 45); }
 #auswertung .aTrue { color: rgb(45, 255, 45); }
 #auswertung .aRight { color: red; }
-#auswertung .aRight.right { color: rgb(45, 255, 45); }
+#auswertung .aRight.right,
+#auswertung .aRight .right
+{ color: rgb(45, 255, 45); }
 
 
 #auswertung .aFinal { 

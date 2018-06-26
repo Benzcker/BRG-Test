@@ -1,4 +1,4 @@
-import Quest from "./Quest.js";
+import { RadioQuest, FieldQuest } from "./Quest.js";
 import { hashCode, constrain } from "./manipulation.js";
 
 String.prototype.hashCode = hashCode;
@@ -26,13 +26,14 @@ window.onload = function() {
     let selectedQuest = 0;
     // Hier quests laden
     const quests = [
-        new Quest('Was ist ein dummer Kuchen?',     ['Beton'],                      ['Erdbeere', 'Schokolade']),
-        new Quest('Wann essen wir endlich?',        ['niemals'],                    ['8:00', '12:00', '18:00']),
-        new Quest('Was macht ein echter Ritter?',   ['Kämpfen', 'Schminken'],       ['Tanzen', 'Singen', 'Lachen']),
-        new Quest('Warum werde ich nicht fertig?',  ['Nicht genug Bemühung'],       ['Internet', 'Ablenkung', 'Schule']),
-        new Quest('Welche Farbe hat d. Waffenrock?', ['Blau'],                      ['Rot', 'Grün', 'Schwarz']),
-        new Quest('Wie lange dauert das noch?',     ['Für immer'],                  ['1h', '5h', '14.5 Tage']),
-        new Quest('Was ist hier nicht richtig?',    ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
+        new RadioQuest('Was ist ein dummer Kuchen?',     ['Beton'],                      ['Erdbeere', 'Schokolade']),
+        new RadioQuest('Wann essen wir endlich?',        ['niemals'],                    ['8:00', '12:00', '18:00']),
+        new FieldQuest('Nenne 3 Tugenden der Ritter.',   3),
+        new RadioQuest('Was macht ein echter Ritter?',   ['Kämpfen', 'Schminken'],       ['Tanzen', 'Singen', 'Lachen']),
+        new RadioQuest('Warum werde ich nicht fertig?',  ['Nicht genug Bemühung'],       ['Internet', 'Ablenkung', 'Schule']),
+        new RadioQuest('Welche Farbe hat d. Waffenrock?', ['Blau'],                      ['Rot', 'Grün', 'Schwarz']),
+        new RadioQuest('Wie lange dauert das noch?',     ['Für immer'],                  ['1h', '5h', '14.5 Tage']),
+        new RadioQuest('Was ist hier nicht richtig?',    ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
     ];
     const maxFehler = 2;
 
@@ -85,18 +86,32 @@ window.onload = function() {
 
 
     window.gotoQuest = function(ind) {
-        if(selectedQuest < quests.length) document.getElementById('overviewNr' + selectedQuest).classList.remove('selected');
-        const answers = document.getElementsByName('answer');
-        let selected;
-        for(const elem of answers) {
-            selected = elem.checked;
-            if (selected) {
-                quests[selectedQuest].selected = elem.value;
-                break;
-            }            
-        }
-        if (selected) {
-            document.getElementById('overviewNr'+selectedQuest).classList.add('answered');
+        const isAQuest = selectedQuest < quests.length;
+        if(isAQuest) {
+            document.getElementById('overviewNr' + selectedQuest).classList.remove('selected');
+            if (quests[selectedQuest].type == 'radio') {
+                let selected;
+                const answers = document.getElementsByName('answer');
+                for(const elem of answers) {
+                    selected = elem.checked;
+                    if (selected) {
+                        quests[selectedQuest].selected = elem.value;
+                        break;
+                    }            
+                }
+                if (selected) {
+                    document.getElementById('overviewNr'+selectedQuest).classList.add('answered');
+                }
+            } else if (quests[selectedQuest].type == 'field') {
+                let complete = true;
+                quests[selectedQuest].answers = [];
+                for (let i = 0; i < quests[selectedQuest].fieldAmount; ++i) {
+                    const nextInp = document.getElementById(`fieldQuestInputQ${selectedQuest}A${i}`).value;
+                    quests[selectedQuest].answers.push(nextInp);
+                    if(nextInp == '' || typeof(nextInp) != 'string') complete = false;
+                }
+                if (complete) document.getElementById('overviewNr' + selectedQuest).classList.add('answered');
+            }
         }
 
         selectedQuest = constrain(ind, 0, quests.length);
@@ -135,7 +150,7 @@ window.onload = function() {
         DOMquestionHeader.classList.remove('invisible');
         document.getElementById('overviewNr' + (selectedQuest)).classList.add('selected');
 
-        DOMquestion.innerHTML = quests[selectedQuest].getTestHTMLText();
+        DOMquestion.innerHTML = quests[selectedQuest].getTestHTMLText(selectedQuest);
         DOMquestionNum.innerText = selectedQuest + 1;
 
         if (selectedQuest == 0) {
@@ -161,12 +176,14 @@ window.onload = function() {
     function generateAuswertung() {
         DOMauswQuests.innerHTML = '';
         let rightAnswered = 0;
+        let maxPoints = 0;
         quests.forEach((quest, ind) => {
             auswQuests.innerHTML += quest.getAuswertungHTMLText(ind, generateAuswertung);
-            rightAnswered += quest.isPoint() | 0; // "| 0" macht Boolean zu Integer (1 oder 0)
+            rightAnswered += quest.getPoints();
+            maxPoints += quest.maxPoints;
         });
-        DOMevaluation.innerText = rightAnswered + '/' + quests.length;
-        if(quests.length - rightAnswered <= maxFehler) {
+        DOMevaluation.innerText = rightAnswered + '/' + maxPoints;
+        if(maxPoints - rightAnswered <= maxFehler) {
             // Bestanden
             DOMresult.innerText = 'Bestanden!'
             DOMresult.classList.add('right');
