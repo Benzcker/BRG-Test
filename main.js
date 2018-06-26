@@ -1,96 +1,9 @@
+import Quest from "./Quest.js";
+import { hashCode, constrain } from "./manipulation.js";
 
+String.prototype.hashCode = hashCode;
 window.onload = function() {
     
-    String.prototype.hashCode = function () {
-        let hash = 0;
-        if (this.length === 0) return hash;
-        for (const chr of this) {
-            hash = ((hash << 5) - hash) + chr.charCodeAt(0);
-            hash |= 0; // Convert to 32bit integer
-        }
-        return hash;
-    };
-
-    // Kein import, weils ja nicht aufm Server ist... :(
-    class Quest {
-        constructor(text, answers, wrongAnswers) {
-            this.text = text;
-            this.answers = answers;
-            this.wrongAnswers = wrongAnswers;
-            this.shuffledAnswers = null;
-            this.selected = null;
-            this.setRight = null;
-        }
-    
-        get correctAnswered() {
-            return this.answers.includes(this.selected);
-        }
-        isPoint() {
-            return typeof(this.setRight)==='boolean' ? this.setRight : (this.setRight = this.correctAnswered);
-        }
-    
-        reset() {
-            this.selected = null;
-            this.shuffledAnswers = null;
-            this.setRight = null;
-        }
-    
-        getTestHTMLText() {
-            if (this.HTMLText) return this.HTMLText;
-            let answersString = '';
-            this.shuffledAnswers = this.shuffledAnswers || shuffle(this.wrongAnswers.concat(this.answers));
-            for (const answer of this.shuffledAnswers) answersString += `
-                <input type="radio" name="answer" id="answ_${answer}" value="${answer}" 
-                ${this.selected == answer ? 'checked' : ''}> 
-                <label for="answ_${answer}"><span><span></span></span>${answer}</label><br>`;
-    
-            return `<h1>${this.text}</h1><form id="answers">${answersString}</form>`;
-        }
-    
-        getAuswertungHTMLText(ind) {
-            const right = this.isPoint() ? 'right' : '';
-            const correct = this.correctAnswered ? 'right' : '';
-            let auswertungHTML = `
-                    <div class="aQuestWrapper">
-                        <div class="aQuest">${ind+1}. ${this.text}</div>
-                        <div class="aAnswer ${correct}">${this.selected ? this.selected : '&#10134;'}</div>
-                        <div class="aTrue">${this.getAuswertungTrues()}</div>
-                        <div class="aRight ${right}" onclick="correctQuest${ind}()">${right ? '&#10004;' : '&#10008;'}</div>
-                    </div>`;
-            window['correctQuest' + ind] = () => {
-                this.setRight = !this.setRight;
-                generateAuswertung();
-            }
-            return auswertungHTML;
-        }
-
-        getAuswertungTrues() {
-            let str = '';
-            for(const ind in this.answers) str += this.answers[ind] + (ind < this.answers.length-1 ? ', ':'');
-            return str;
-        }
-    }
-    
-    function shuffle(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-    
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-    
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-    
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-    
-        return array;
-    }
-
-
     const   DOMstart                    = document.getElementById('startWrapper'),
             DOMpruefung                 = document.getElementById('pruefungWrapper'),
             DOMauswertung               = document.getElementById('auswertungWrapper'),
@@ -113,13 +26,13 @@ window.onload = function() {
     let selectedQuest = 0;
     // Hier quests laden
     const quests = [
-        new Quest('Was ist ein dummer Kuchen?', ['Beton'], ['Erdbeere', 'Schokolade']),
-        new Quest('Wann essen wir endlich?', ['niemals'], ['8:00', '12:00', '18:00']),
-        new Quest('Was macht ein echter Ritter?', ['Kämpfen', 'Schminken'], ['Tanzen', 'Singen', 'Lachen']),
-        new Quest('Warum werde ich nicht fertig?', ['Nicht genug Bemühung'], ['Internet', 'Ablenkung', 'Schule']),
-        new Quest('Welche Farbe hat d. Waffenrock?', ['Blau'], ['Rot', 'Grün', 'Schwarz']),
-        new Quest('Wie lange dauert das noch?', ['Für immer'], ['1h', '5h', '14.5 Tage']),
-        new Quest('Was ist hier nicht richtig?', ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
+        new Quest('Was ist ein dummer Kuchen?',     ['Beton'],                      ['Erdbeere', 'Schokolade']),
+        new Quest('Wann essen wir endlich?',        ['niemals'],                    ['8:00', '12:00', '18:00']),
+        new Quest('Was macht ein echter Ritter?',   ['Kämpfen', 'Schminken'],       ['Tanzen', 'Singen', 'Lachen']),
+        new Quest('Warum werde ich nicht fertig?',  ['Nicht genug Bemühung'],       ['Internet', 'Ablenkung', 'Schule']),
+        new Quest('Welche Farbe hat d. Waffenrock?', ['Blau'],                      ['Rot', 'Grün', 'Schwarz']),
+        new Quest('Wie lange dauert das noch?',     ['Für immer'],                  ['1h', '5h', '14.5 Tage']),
+        new Quest('Was ist hier nicht richtig?',    ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
     ];
     const maxFehler = 2;
 
@@ -170,11 +83,6 @@ window.onload = function() {
     DOMswitchToPruefung.onclick = () => switchTo('pruefung');
     DOMswitchToAuswertung.onclick = () => switchTo('auswertung');
 
-    function constrain(val, min, max) {
-        if (val < min) return min;
-        if (val > max) return max;
-        return val;
-    }
 
     window.gotoQuest = function(ind) {
         if(selectedQuest < quests.length) document.getElementById('overviewNr' + selectedQuest).classList.remove('selected');
@@ -234,9 +142,7 @@ window.onload = function() {
             DOMprevQuest.classList.add('invisible');
         } else {
             DOMprevQuest.classList.remove('invisible');
-        }
-
-        
+        } 
     }
 
     DOMprevQuest.onclick = () => gotoQuest(selectedQuest-1);
@@ -256,7 +162,7 @@ window.onload = function() {
         DOMauswQuests.innerHTML = '';
         let rightAnswered = 0;
         quests.forEach((quest, ind) => {
-            auswQuests.innerHTML += quest.getAuswertungHTMLText(ind);
+            auswQuests.innerHTML += quest.getAuswertungHTMLText(ind, generateAuswertung);
             rightAnswered += quest.isPoint() | 0; // "| 0" macht Boolean zu Integer (1 oder 0)
         });
         DOMevaluation.innerText = rightAnswered + '/' + quests.length;
@@ -282,5 +188,5 @@ window.onload = function() {
     //////// INITIALISIERUNG ///////////
     switchTo('start');
     // switchTo('pruefung', true);
-    switchTo('auswertung', true);
+    // switchTo('auswertung', true);
 }
