@@ -51,6 +51,13 @@ button:hover { cursor: pointer; }
     border-radius: 5px;
     padding: 3px;
 }
+#pruefung .gridElement.logo { text-align: center; }
+#pruefung .gridElement.logo img {
+    max-width: 90%;
+    max-height: 90%;
+    height: 90%;
+    margin-top: 2.5%;
+}
 
 #pruefung .logo { grid-area: pLogo; background: blue; }
 #pruefung .header { grid-area: pTitle; 
