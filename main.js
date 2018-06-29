@@ -7,8 +7,11 @@ window.onload = function() {
     const   DOMstart                    = document.getElementById('startWrapper'),
             DOMpruefung                 = document.getElementById('pruefungWrapper'),
             DOMauswertung               = document.getElementById('auswertungWrapper'),
-            DOMswitchToStart            = document.getElementById('switchToStart'),
-            DOMswitchToPruefung         = document.getElementById('switchToPruefung'),
+            DOMadmin                    = document.getElementById('adminWrapper'),
+            DOMadminlink                = document.getElementById('adminlink'),
+            DOMadminlinkPsw             = document.getElementById('adminlinkPsw'),
+            DOMswitchToStart            = document.getElementsByClassName('switchToStart'),
+            DOMswitchToPruefung         = document.getElementById('switchToPruefungNovize'),
             DOMswitchToAuswertung       = document.getElementById('switchToAuswertung'),
             DOMprevQuest                = document.getElementById('prevQuest'),
             DOMnextQuest                = document.getElementById('nextQuest'),
@@ -40,8 +43,8 @@ window.onload = function() {
     // Passwort, um Auswertung ansehen zu können
     let auswertungsPswHash = -2036676520;
     
-    function switchTo(window = 'start', force=false) {
-        if (window == 'auswertung' && auswertungsPswHash != DOMauswertungsPsw.value.hashCode() && !force) {
+    function switchTo(nextWindow = 'start', force=false) {
+        if (!force && nextWindow == 'auswertung' && auswertungsPswHash != DOMauswertungsPsw.value.hashCode()) {
             DOMauswertungsPsw.value = '';
             DOMauswertungsPsw.classList.add('wrong');
             DOMauswertungsPsw.focus();
@@ -49,14 +52,25 @@ window.onload = function() {
                 DOMauswertungsPsw.classList.remove('wrong');
             }, 750);
             return;
+        } else if (!force && nextWindow == 'admin' && auswertungsPswHash != DOMadminlinkPsw.value.hashCode()) {
+            DOMadminlinkPsw.value = '';
+            DOMadminlinkPsw.classList.add('wrong');
+            DOMadminlinkPsw.focus();
+            setTimeout(() => {
+                DOMadminlinkPsw.classList.remove('wrong');
+            }, 750);
+            return;
         }
 
-        DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = true;
+        DOMadminlinkPsw.value = '';
+
+        DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = DOMadmin.hidden = true;
         DOMstart.classList.add('hidden');
         DOMpruefung.classList.add('hidden');
         DOMauswertung.classList.add('hidden');
-        
-        switch (window) {
+        DOMadmin.classList.add('hidden');
+        console.log(nextWindow);
+        switch (nextWindow) {
             case 'start':
                 DOMstart.hidden = false;
                 DOMstart.classList.remove('hidden');
@@ -74,16 +88,21 @@ window.onload = function() {
                 DOMauswertungsPsw.value = '';
                 generateAuswertung();
                 break;
+            case 'admin':
+                DOMadmin.hidden = false;
+                DOMadmin.classList.remove('hidden');
+                break;
         
             default:
                 break;
         }
     }
 
-    DOMswitchToStart.onclick = () => switchTo('start');
+    // onclicks setzen
+    for (const b of DOMswitchToStart) { b.onclick = () => switchTo('start'); };
     DOMswitchToPruefung.onclick = () => switchTo('pruefung');
     DOMswitchToAuswertung.onclick = () => switchTo('auswertung');
-
+    DOMadminlink.onclick = () => switchTo('admin');
 
     window.gotoQuest = function(ind) {
         const isAQuest = selectedQuest < quests.length;
@@ -163,6 +182,7 @@ window.onload = function() {
     DOMprevQuest.onclick = () => gotoQuest(selectedQuest-1);
     DOMnextQuest.onclick = () => gotoQuest(selectedQuest+1);
     DOMauswertungsPsw.onkeydown = evt => { if (evt.key == 'Enter') DOMswitchToAuswertung.click(); }
+    DOMadminlinkPsw.onkeydown = evt => { if (evt.key == 'Enter') DOMadminlink.click(); }
 
     window.generateOverview = function() {
         let questionsString = '';

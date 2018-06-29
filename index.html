@@ -12,8 +12,14 @@
     <!-- HAUPTMENU -->
     <section id="startWrapper" class="wrapper">
         <div id="start">
-            <div class="header">Main</div>
-            <button type="button" class="nextButton" id="switchToPruefung">Starte Prüfung</button>
+            <div class="header">Berliner Rittergilde</div>
+            <div class="subheader">Prüfungen</div>
+            <button type="button" class="nextButton" id="switchToPruefungNovize">Novize</button>
+            <div class="filler"></div>
+            <div class="adminlinkWrapper">
+                <span class="adminlinklabel">Admin-Bereich</span>
+                <div class="adminlinkPswWrapper"><input id="adminlinkPsw" placeholder="Passwort" type="password"><button id="adminlink">&#10132;</button></div>
+            </div>
         </div>
     </section>
 
@@ -45,7 +51,15 @@
                 <div class="result" id="result"></div>
                 <div class="evaluation" id="evaluation"></div>
             </div>
-            <button type="button" class="mainMenuButton" id="switchToStart">Zurück zum Hauptmenu</button>
+            <button type="button" class="mainMenuButton switchToStart" id="switchToStart0">Zurück zum Hauptmenu</button>
+        </div>
+    </section>
+
+    <!-- ADMINMENU -->
+    <section id="adminWrapper" class="wrapper">
+        <div id="admin">
+            <div class="header">Admin-Bereich</div>
+            <button type="button" class="mainMenuButton switchToStart" id="switchToStart1">Zurück zum Hauptmenu</button>
         </div>
     </section>
 </body>

@@ -13,20 +13,30 @@ button:hover { cursor: pointer; }
 /* __________START___________ */
 #start {
     width: 100%;
-    height: 100vh;
-    
-    background: red;
+    min-height: 99vh;
     
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto;
+    grid-template-rows: 6rem 4rem 5rem auto 3rem;
     grid-template-areas: 
         "sTitle"
-        "sStart";
+        "sSubTitle"
+        "sStart"
+        "sFiller"
+        "sAdmin";
 }
-#start .header { grid-area: sTitle; }
+#start .header { grid-area: sTitle; text-align: center; font-size: 5em; }
+#start .subheader { grid-area: sSubTitle; text-align: center; font-size: 3em; }
 #start .nextButton { grid-area: sStart; }
-
+#start .filler { grid-area: sFiller; }
+#start .adminlinkWrapper { grid-area: sAdmin; }
+#start .adminlinkWrapper .adminlinklabel,
+#start .adminlinkWrapper .adminlinkPswWrapper { bottom: 0; position: absolute; }
+#start .adminlinkWrapper .adminlinkPswWrapper { opacity: 0; }
+#start .adminlinkWrapper:hover .adminlinkPswWrapper { opacity: 1; }
+#start .adminlinkWrapper .adminlinkPswWrapper #adminlinkPsw.wrong {
+    border: 2px solid red;
+}
 
 /* ########################## */
 /* __________PRÜFUNG_________ */
@@ -210,6 +220,13 @@ button:hover { cursor: pointer; }
     background: rgb(122, 255, 95); 
 }
 
+
+/* ########################## */
+/* ___________ADMIN__________ */
+#admin {
+    width: 100%;
+    height: 100vh;
+}
 
 
 /* ########################## */
