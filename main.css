@@ -2,8 +2,8 @@ html, body {
     margin: 0;
     padding: 0;
 
-    background: rgb(249, 249, 255);
-    
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+
     user-select: none; -webkit-user-select: none; /* DISABLE TEXT SELECTION */
 }
 
@@ -14,29 +14,35 @@ button:hover { cursor: pointer; }
 #start {
     width: 100%;
     min-height: 99vh;
-    
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 6rem 4rem 5rem auto 3rem;
-    grid-template-areas: 
-        "sTitle"
-        "sSubTitle"
-        "sStart"
-        "sFiller"
-        "sAdmin";
 }
-#start .header { grid-area: sTitle; text-align: center; font-size: 5em; }
-#start .subheader { grid-area: sSubTitle; text-align: center; font-size: 3em; }
-#start .nextButton { grid-area: sStart; }
-#start .filler { grid-area: sFiller; }
-#start .adminlinkWrapper { grid-area: sAdmin; }
-#start .adminlinkWrapper .adminlinklabel,
-#start .adminlinkWrapper .adminlinkPswWrapper { bottom: 0; position: absolute; }
-#start .adminlinkWrapper .adminlinkPswWrapper { opacity: 0; }
+#start .header { text-align: center; font-size: 5em; }
+#start .subheader { text-align: center; font-size: 3em; }
+#start #buttonContainer { width: 100%; }
+#start #buttonContainer .nextButton { width: 80%; height: 3rem; 
+    display: block; 
+    margin: auto; margin-top: 0.5rem; 
+    background: #6ca4ff;
+    transition: all 200ms ease-in-out;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
+}
+#start #buttonContainer .nextButton:hover { 
+    background: #3482ff;
+    color: #f5f5f5;
+    font-weight: bolder;
+} 
+#start .adminlinkWrapper { width: 30%; height: 2rem; margin-top: 2rem; }
+#start .adminlinkWrapper .adminlinklabel { transition: all 200ms ease-in-out; position: relative; bottom: -1.5rem; }
+#start .adminlinkWrapper:hover .adminlinklabel { font-size: 110%; bottom: 0; }
+#start .adminlinkWrapper .adminlinkPswWrapper { bottom: 0; }
+#start .adminlinkWrapper .adminlinkPswWrapper { opacity: 0; transition: all 200ms ease-in-out; }
 #start .adminlinkWrapper:hover .adminlinkPswWrapper { opacity: 1; }
 #start .adminlinkWrapper .adminlinkPswWrapper #adminlinkPsw.wrong {
     border: 2px solid red;
 }
+#start .adminlinkWrapper #adminlink { background: #6ca4ff; border: none; margin: 0.2rem; }
+#start .adminlinkWrapper #adminlink:hover { background: #3482ff; }
 
 /* ########################## */
 /* __________PRÜFUNG_________ */
@@ -45,8 +51,6 @@ button:hover { cursor: pointer; }
     height: 98vh;
     margin: auto;
     padding: 5px;
-    
-    background: rgb(249, 249, 255);
     
     display: grid;
     grid-gap: 2px;
@@ -70,8 +74,7 @@ button:hover { cursor: pointer; }
 }
 
 #pruefung .logo { grid-area: pLogo; background: blue; }
-#pruefung .header { grid-area: pTitle; 
-    /* background: yellow; */ 
+#pruefung .header { grid-area: pTitle;
     text-align: center; 
     font-size: 4vh; 
     padding-top: 2.5%;
@@ -96,7 +99,6 @@ button:hover { cursor: pointer; }
 
 #pruefung .question { 
     grid-area: pQuestion; 
-    background: rgb(249, 249, 255); 
     padding: 10px;
 }
 #pruefung .question .fieldQuestInput {
@@ -106,9 +108,8 @@ button:hover { cursor: pointer; }
     padding: 0.2rem;
 }
 
-.endButton { /* grid-area: pEnd;  */ 
-    background: rgb(86, 233, 56); 
-    /* float: right;  */
+.endButton {
+    background: rgb(86, 233, 56);
 
     width: 250px;
     height: 8vh;
@@ -137,15 +138,10 @@ button:hover { cursor: pointer; }
 /* ________AUSWERTUNG________ */
 #auswertung {
     width: 100%;
-    /* height: 100vh; */
-
-    background: rgb(249, 249, 255);;
-
 }
 #auswertung .header { 
     height: 4rem;
 
-    /* border-bottom: 3px solid black; */
     margin-bottom: 1rem;
     font-size: 130%;
     padding-left: 1rem;

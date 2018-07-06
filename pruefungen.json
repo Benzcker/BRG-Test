@@ -1,0 +1,20 @@
+{
+    "novize": [
+        {
+            "type": "radio",
+            "text": "Was ist ein dummer Kuchen?",
+            "answers": [
+                "Beton"
+            ],
+            "wrongAnswers": [
+                "Erdbeere",
+                "Schokolade"
+            ]
+        },
+        {
+            "type": "field",
+            "text": "Nenne 3 Tugenden der Ritter.",
+            "fieldAmount": 3
+        }
+    ]
+}

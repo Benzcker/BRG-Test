@@ -32,3 +32,8 @@ export function constrain(val, min, max) {
     if (val > max) return max;
     return val;
 }
+
+export function loadJSON(url) {
+    return fetch(url)
+        .then(r => r.json());
+}
