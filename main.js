@@ -1,9 +1,10 @@
 import { hashCode, constrain, loadJSON } from "./manipulation.js";
-import { extractPruefungen } from "./pruefung.js";
+import { extractPruefungen } from "./pruefungsgenerator.js";
+import { RadioQuest, FieldQuest, Quest } from "./Quest.js";
 
 String.prototype.hashCode = hashCode;
 window.onload = function() {
-    loadJSON('./pruefungen.json')
+    loadJSON('./pruefungen.json?'+Date.now())
     .then( pruefungsDaten => {
 
         const   DOMstart                    = document.getElementById('startWrapper'),
@@ -27,33 +28,18 @@ window.onload = function() {
                 DOMauswQuests               = document.getElementById('auswQuests'),
                 DOMevaluation               = document.getElementById('evaluation'),
                 DOMresult                   = document.getElementById('result');
-        
-
+        // unten
         const pruefungen = extractPruefungen(pruefungsDaten);
-        console.log(pruefungen);
-
-        //     'novize': [
-        //         new RadioQuest('Was ist ein dummer Kuchen?', ['Beton'], ['Erdbeere', 'Schokolade']),
-        //         new RadioQuest('Wann essen wir endlich?', ['niemals'], ['8:00', '12:00', '18:00']),
-        //         new FieldQuest('Nenne 3 Tugenden der Ritter.', 3),
-        //         new RadioQuest('Was macht ein echter Ritter?', ['Kämpfen', 'Schminken'], ['Tanzen', 'Singen', 'Lachen']),
-        //         new RadioQuest('Warum werde ich nicht fertig?', ['Nicht genug Bemühung'], ['Internet', 'Ablenkung', 'Schule']),
-        //         new RadioQuest('Welche Farbe hat d. Waffenrock?', ['Blau'], ['Rot', 'Grün', 'Schwarz']),
-        //         new RadioQuest('Wie lange dauert das noch?', ['Für immer'], ['1h', '5h', '14.5 Tage']),
-        //         new RadioQuest('Was ist hier nicht richtig?', ['Ich lerne nicht für Prüfungen'], ['Deine Frisur', 'Deine Antworten']),
-        //     ]
-        // };
-        
         let selectedQuest = 0;
         // Wenn er auf button drückt quests und maxFehler setzen
-        const quests = pruefungen['novize'];
-        const maxFehler = 2;
+        const quests = pruefungen['novize']['quests'];
+        const maxFehler = pruefungen['novize']['maxMistakes'];
 
         // Passwort, um Auswertung ansehen zu können
         let auswertungsPswHash = -2036676520;
         
-        function switchTo(nextWindow = 'start', force=false) {
-            if (!force && nextWindow == 'auswertung' && auswertungsPswHash != DOMauswertungsPsw.value.hashCode()) {
+        function switchTo(nextWindow = 'start') {
+            if (nextWindow == 'auswertung' && auswertungsPswHash != DOMauswertungsPsw.value.hashCode()) {
                 DOMauswertungsPsw.value = '';
                 DOMauswertungsPsw.classList.add('wrong');
                 DOMauswertungsPsw.focus();
@@ -61,7 +47,7 @@ window.onload = function() {
                     DOMauswertungsPsw.classList.remove('wrong');
                 }, 750);
                 return;
-            } else if (!force && nextWindow == 'admin' && auswertungsPswHash != DOMadminlinkPsw.value.hashCode()) {
+            } else if (nextWindow == 'admin' && auswertungsPswHash != DOMadminlinkPsw.value.hashCode()) {
                 DOMadminlinkPsw.value = '';
                 DOMadminlinkPsw.classList.add('wrong');
                 DOMadminlinkPsw.focus();
@@ -73,12 +59,16 @@ window.onload = function() {
 
             DOMadminlinkPsw.value = '';
 
-            DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = DOMadmin.hidden = true;
-            DOMstart.classList.add('hidden');
-            DOMpruefung.classList.add('hidden');
-            DOMauswertung.classList.add('hidden');
-            DOMadmin.classList.add('hidden');
-            console.log(nextWindow);
+            // DOMstart.hidden = DOMpruefung.hidden = DOMauswertung.hidden = DOMadmin.hidden = true;
+            // DOMstart.classList.add('hidden');
+            // DOMpruefung.classList.add('hidden');
+            // DOMauswertung.classList.add('hidden');
+            // DOMadmin.classList.add('hidden');
+            for(const elem of [DOMstart, DOMpruefung, DOMauswertung, DOMadmin]) {
+                elem.hidden = true;
+                elem.classList.add('hidden');
+            }
+
             switch (nextWindow) {
                 case 'start':
                     DOMstart.hidden = false;
@@ -151,7 +141,7 @@ window.onload = function() {
                 DOMquestion.innerHTML = '';
                 DOMquestion.appendChild(switchParent);
 
-                const answQuests = quests.filter(q => {return q.selected}).length;
+                const answQuests = quests.filter(q => {return q.isAnswered}).length;
                 const allAnswered = answQuests == quests.length;
                 const DOMbeantwFragen = switchParent.childNodes.item(1);
                 const answQuestsString = allAnswered ? 'alle' : (`${answQuests} von ${quests.length}`);
@@ -233,7 +223,5 @@ window.onload = function() {
 
         //////// INITIALISIERUNG ///////////
         switchTo('start');
-        // switchTo('pruefung', true);
-        // switchTo('auswertung', true);
     });
 }

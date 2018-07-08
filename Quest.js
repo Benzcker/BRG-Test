@@ -1,6 +1,6 @@
 import { shuffle } from "./manipulation.js";
 
-class Quest {
+export class Quest {
     constructor(text, type='not defined') {
         this.text = text;
         this.type = type;
@@ -8,6 +8,7 @@ class Quest {
     get maxPoints() { return 1; }
     get correctAnswered() { return false; }
     getPoints() { console.error("No Questtype defined! Returning 0 Points..."); return 0; }
+    get isAnswered() { console.error("No Questtype defined! Returning not answered..."); return false; }
     reset() {  }
     getTestHTMLText() {
         return `<h1>${this.text}</h1> Kein Questtype festgelegt!`;
@@ -54,6 +55,7 @@ export class FieldQuest extends Quest{
     getPoints() {
         return this.rights.reduce((points, r) => { return points + (r |0); });
     }
+    get isAnswered() { return this.answers.every(answ => {return answ != '' && answ != false}) }
 
     getTestHTMLText(ind) {
         let inputFields = '';
@@ -96,13 +98,14 @@ export class RadioQuest extends Quest {
     }
 
     get correctAnswered() {
-        this.answers.includes(this.selected);
+        return this.answers.includes(this.selected);
     }
     getPoints() {
         // Wenn setRight Boolean ist, dann return setRight; sonst setze setRight auf correctAnswered und return das dann
         // Zum Schluss |0 um aus dem Boolean 0 oder 1 zu machen
         return (typeof (this.setRight) === 'boolean' ? this.setRight : (this.setRight = this.correctAnswered)) |0;
     }
+    get isAnswered() { return ((this.selected && this.selected.length) |0) > 0 }
 
     reset() {
         // Standart
@@ -127,11 +130,10 @@ export class RadioQuest extends Quest {
 
     getAuswertungHTMLText(ind, generateAuswertung) {
         const right = this.getPoints() > 0 ? 'right' : '';
-        const correct = this.correctAnswered ? 'right' : '';
         let auswertungHTML = `
                     <div class="aQuestWrapper">
                         <div class="aQuest">${ind + 1}. ${this.text}</div>
-                        <div class="aAnswer ${correct}">${this.selected ? this.selected : '&#10134;'}</div>
+                        <div class="aAnswer ${right}">${this.selected ? this.selected : '&#10134;'}</div>
                         <div class="aTrue">${this.getAuswertungTrues()}</div>
                         <div class="aRight ${right}" onclick="correctQuest${ind}()">${right ? '&#10004;' : '&#10008;'}</div>
                     </div>`;
