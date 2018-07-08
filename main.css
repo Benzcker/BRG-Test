@@ -16,6 +16,12 @@ button:hover { cursor: pointer; }
     min-height: 99vh;
 }
 #start .header { text-align: center; font-size: 5em; }
+#start .header table { width: 100%; }
+#start .header table tr td { width: calc(50vw - 5vw); }
+#start .header table tr td:nth-of-type(1) { text-align: right; }
+#start .header table tr td:nth-of-type(2) { text-align: center; width: 10vw; }
+#start .header table tr td:nth-of-type(3) { text-align: left; }
+#start .header table tr td img { width: 100%; }
 #start .subheader { text-align: center; font-size: 3em; }
 #start #buttonContainer { width: 100%; }
 #start #buttonContainer .nextButton { width: 80%; height: 3rem; 
