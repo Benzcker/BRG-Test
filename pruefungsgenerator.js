@@ -7,7 +7,6 @@ export function extractPruefungen(jsonData={}) {
         pruefungen[name] = {};
         pruefungen[name]['maxMistakes'] = jsonData[name]['maxMistakes'];
         pruefungen[name]['quests'] = [];
-        console.log(pruefungen);
         for (const question of jsonData[name]['quests']) {
             pruefungen[name]['quests'].push( generateQuestion(question) );
         }
@@ -32,4 +31,8 @@ function generateQuestion(questionJSON={}) {
         default:
             return new Quest(questionJSON['text'] || 'Diese Frage wurde nicht definiert.');
     }
+}
+
+export function generateMainMenuButton(name, pruefung) {
+    return `<button type="button" class="nextButton" onclick="switchToPruefung${name}()">${name}</button>`;
 }

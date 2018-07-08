@@ -1,5 +1,5 @@
 {
-    "novize": {
+    "Novize": {
         "maxMistakes": 2,
         "quests": [
             {
@@ -37,6 +37,29 @@
                 "wrongAnswers": [
                     "Rot", "Grün", "Schwarz"
                 ]
+            }
+        ]
+    },
+    "Soldat": {
+        "maxMistakes": 1,
+        "quests": [
+            {
+                "type": "radio",
+                "text": "Was ist Benitos Lieblingsessen?",
+                "answers": [
+                    "Lasagne",
+                    "Schnitzel"
+                ],
+                "wrongAnswers": [
+                    "Rote Beete Suppe",
+                    "Pilzauflauf",
+                    "Lachsbrötchen"
+                ]
+            },
+            {
+                "type": "field",
+                "text": "Wer ist Volker?",
+                "fieldAmount": 1
             }
         ]
     }

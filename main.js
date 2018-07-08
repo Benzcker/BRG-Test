@@ -1,6 +1,5 @@
 import { hashCode, constrain, loadJSON } from "./manipulation.js";
-import { extractPruefungen } from "./pruefungsgenerator.js";
-import { RadioQuest, FieldQuest, Quest } from "./Quest.js";
+import { extractPruefungen, generateMainMenuButton } from "./pruefungsgenerator.js";
 
 String.prototype.hashCode = hashCode;
 window.onload = function() {
@@ -13,8 +12,8 @@ window.onload = function() {
                 DOMadmin                    = document.getElementById('adminWrapper'),
                 DOMadminlink                = document.getElementById('adminlink'),
                 DOMadminlinkPsw             = document.getElementById('adminlinkPsw'),
+                DOMbuttonContainer          = document.getElementById('buttonContainer'),
                 DOMswitchToStart            = document.getElementsByClassName('switchToStart'),
-                DOMswitchToPruefung         = document.getElementById('switchToPruefungNovize'),
                 DOMswitchToAuswertung       = document.getElementById('switchToAuswertung'),
                 DOMprevQuest                = document.getElementById('prevQuest'),
                 DOMnextQuest                = document.getElementById('nextQuest'),
@@ -31,9 +30,20 @@ window.onload = function() {
         // unten
         const pruefungen = extractPruefungen(pruefungsDaten);
         let selectedQuest = 0;
-        // Wenn er auf button drückt quests und maxFehler setzen
-        const quests = pruefungen['novize']['quests'];
-        const maxFehler = pruefungen['novize']['maxMistakes'];
+        let quests = {};
+        let maxFehler = -1;
+        
+        function generateMainMenuButtons() {
+            DOMbuttonContainer.innerHTML = '';
+            for (const name in pruefungen) {
+                window['switchToPruefung' + name] = () => {
+                    quests = pruefungen[name]['quests'];
+                    maxFehler = pruefungen[name]['maxMistakes'];
+                    switchTo('pruefung');
+                }
+                DOMbuttonContainer.innerHTML += generateMainMenuButton(name);
+            }
+        }
 
         // Passwort, um Auswertung ansehen zu können
         let auswertungsPswHash = -2036676520;
@@ -73,6 +83,7 @@ window.onload = function() {
                 case 'start':
                     DOMstart.hidden = false;
                     DOMstart.classList.remove('hidden');
+                    generateMainMenuButtons();
                     resetQuests();
                     break;
                 case 'pruefung':
@@ -99,7 +110,6 @@ window.onload = function() {
 
         // onclicks setzen
         for (const b of DOMswitchToStart) { b.onclick = () => switchTo('start'); };
-        DOMswitchToPruefung.onclick = () => switchTo('pruefung');
         DOMswitchToAuswertung.onclick = () => switchTo('auswertung');
         DOMadminlink.onclick = () => switchTo('admin');
 
