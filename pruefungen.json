@@ -14,9 +14,29 @@
                 ]
             },
             {
+                "type": "radio",
+                "text": "Wann essen wir endlich?",
+                "answers": [
+                    "niemals"
+                ],
+                "wrongAnswers": [
+                    "8: 00", "12: 00", "18: 00"
+                ]
+            },
+            {
                 "type": "field",
                 "text": "Nenne 3 Tugenden der Ritter.",
                 "fieldAmount": 3
+            },
+            {
+                "type": "radio",
+                "text": "Welche Farbe hat d. Waffenrock?",
+                "answers": [
+                    "Blau"
+                ],
+                "wrongAnswers": [
+                    "Rot", "Grün", "Schwarz"
+                ]
             }
         ]
     }
