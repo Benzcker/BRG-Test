@@ -253,7 +253,7 @@ button:hover { cursor: pointer; }
 #admin #adminButtonContainer .pruefung table tr td:nth-of-type(2) { text-align: right; }
 /* #admin #adminButtonContainer .pruefung .text {  } */
 /* #admin #adminButtonContainer .pruefung .buttons {  } */
-#admin #adminButtonContainer .pruefung .buttons button { background: rgba(0, 0, 0, 0); border: none; width: 2rem; height: 2.5rem; }
+#admin #adminButtonContainer .pruefung .buttons button { background: rgba(0, 0, 0, 0); border: none; width: 2rem; height: 2.5rem; text-decoration: none; }
 #admin #adminButtonContainer .pruefung .buttons button:active { color: white; }
 #admin #adminButtonContainer .pruefung .buttons button i { font-size: 2em; }
 
