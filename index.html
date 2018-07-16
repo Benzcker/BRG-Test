@@ -64,5 +64,19 @@
             <button type="button" id="startNewPruefCreate"><i class="fa fa-plus"></i></button>
         </div>
     </section>
+
+    <!-- EDITOR -->
+    <section id="editorWrapper" class="wrapper">
+        <div id="editor">
+            <div class="header">Editor</div>
+            <input type="text" name="pruefNameEditor" id="pruefNameEditor" placeholder="Prüfungsname">
+            <div id="editorQuestWrapper">
+                <div class="quest radioQuest">Ich bin eine Quest</div>
+                <div class="quest fieldQuest"></div>
+            </div>
+            <div class="editorMaxFehlerWrapper">Maximale Fehleranzahl: <input type="number" name="editorMaxFehler" id="editorMaxFehler" min="0"> / <span id="editorMaxPoints">0</span></div>
+            <button type="button" id="saveChanges">Speichern <i class="fa fa-download"></i></button>
+        </div>
+    </section>
 </body>
 </html>

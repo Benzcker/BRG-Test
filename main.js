@@ -10,6 +10,7 @@ window.onload = function() {
                 DOMpruefung                 = document.getElementById('pruefungWrapper'),
                 DOMauswertung               = document.getElementById('auswertungWrapper'),
                 DOMadmin                    = document.getElementById('adminWrapper'),
+                DOMeditor                   = document.getElementById('editorWrapper'),
                 DOMadminlink                = document.getElementById('adminlink'),
                 DOMadminlinkPsw             = document.getElementById('adminlinkPsw'),
                 DOMbuttonContainer          = document.getElementById('buttonContainer'),
@@ -28,6 +29,7 @@ window.onload = function() {
                 DOMevaluation               = document.getElementById('evaluation'),
                 DOMresult                   = document.getElementById('result'),
                 DOMadminButtonContainer     = document.getElementById('adminButtonContainer'),
+                DOMpruefNameEditor          = document.getElementById('pruefNameEditor'),
                 DOMstartNewPruefCreate      = document.getElementById('startNewPruefCreate');
         // unten
         const pruefungen = extractPruefungen(pruefungsDaten);
@@ -76,7 +78,7 @@ window.onload = function() {
             // DOMpruefung.classList.add('hidden');
             // DOMauswertung.classList.add('hidden');
             // DOMadmin.classList.add('hidden');
-            for(const elem of [DOMstart, DOMpruefung, DOMauswertung, DOMadmin]) {
+            for (const elem of [DOMstart, DOMpruefung, DOMauswertung, DOMadmin, DOMeditor]) {
                 elem.hidden = true;
                 elem.classList.add('hidden');
             }
@@ -105,7 +107,11 @@ window.onload = function() {
                     DOMadmin.classList.remove('hidden');
                     generateAdminPruefungen();
                     break;
-            
+                case 'editor':
+                    DOMeditor.hidden = false;
+                    DOMeditor.classList.remove('hidden');
+                    break;
+
                 default:
                     break;
             }
@@ -256,7 +262,7 @@ window.onload = function() {
                 <table><tr>
                     <td><span class="text">${pruef}</span></td>
                     <td><span class="buttons">
-                        <button class="edit" type="button"><i class="fa fa-gear"></i></button>
+                        <button class="edit" type="button" onclick="openInEditor('${pruef}')"><i class="fa fa-gear"></i></button>
                         <button class="delete" type="button"><i class="fa fa-trash"></i></button>
                     </span></td>
                 </tr></table>
@@ -264,9 +270,16 @@ window.onload = function() {
         }
 
         function startNewPruefCreate() {
-            alert('new Pruef');
+            openInEditor();
         }
         DOMstartNewPruefCreate.onclick = startNewPruefCreate;
+
+
+        ////////// EDITOR /////////////
+        window.openInEditor = function(pruefName='') {
+            switchTo('editor');
+            DOMpruefNameEditor.value = pruefName;
+        }
 
         //////// INITIALISIERUNG ///////////
         switchTo('start');

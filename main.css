@@ -261,6 +261,22 @@ button:hover { cursor: pointer; }
 
 
 /* ########################## */
+/* __________EDITOR__________ */
+#editor .header { font-size: 3em; margin: 1rem; text-decoration: underline; display: inline; }
+#editor #pruefNameEditor { width: 40%; height: 2rem; font-size: 1.5em; margin: 1rem; margin-top: 0; }
+
+#editor #editorQuestWrapper { width: 94%; margin: auto; padding: 1%; 
+    background: #3482ff;
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.7);
+}
+#editor #editorQuestWrapper .quest { width: 100%; margin: auto; background: rgb(31, 100, 190); }
+
+#editor .editorMaxFehlerWrapper { margin: 1rem; }
+#editor .editorMaxFehlerWrapper #editorMaxFehler { width: 2rem; }
+#editor #saveChanges { height: 4rem; font-size: 2em; padding: 1rem; margin: 1rem; background: #6ca4ff; font-weight: bold; display: block; border: none; }
+
+
+/* ########################## */
 /* __________GENERAL_________ */
 
 .wrapper { display: block; }
