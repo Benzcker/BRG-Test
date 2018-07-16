@@ -119,7 +119,8 @@ window.onload = function() {
         window.gotoQuest = function(ind) {
             const isAQuest = selectedQuest < quests.length;
             if(isAQuest) {
-                document.getElementById('overviewNr' + selectedQuest).classList.remove('selected');
+                const DOMelem = document.getElementById('overviewNr' + selectedQuest);
+                DOMelem.classList.remove('selected');
                 if (quests[selectedQuest].type == 'radio') {
                     let selected;
                     const answers = document.getElementsByName('answer');
@@ -131,17 +132,19 @@ window.onload = function() {
                         }            
                     }
                     if (selected) {
-                        document.getElementById('overviewNr'+selectedQuest).classList.add('answered');
+                        DOMelem.classList.add('answered');
                     }
                 } else if (quests[selectedQuest].type == 'field') {
                     let complete = true;
                     quests[selectedQuest].answers = [];
                     for (let i = 0; i < quests[selectedQuest].fieldAmount; ++i) {
-                        const nextInp = document.getElementById(`fieldQuestInputQ${selectedQuest}A${i}`).value;
+                        const nextField = document.getElementById(`fieldQuestInputQ${selectedQuest}A${i}`);
+                        if (!nextField) { complete = false; continue; }
+                        const nextInp = nextField.value;
                         quests[selectedQuest].answers.push(nextInp);
                         if(nextInp == '' || typeof(nextInp) != 'string') complete = false;
                     }
-                    if (complete) document.getElementById('overviewNr' + selectedQuest).classList.add('answered');
+                    if (complete) DOMelem.classList.add('answered');
                 }
             }
 
