@@ -229,6 +229,35 @@ button:hover { cursor: pointer; }
     width: 100%;
     height: 100vh;
 }
+#admin .header { font-size: 3em; margin: 1rem; text-decoration: underline; }
+
+#admin #adminButtonContainer { width: 100%; }
+#admin #startNewPruefCreate,
+#admin #adminButtonContainer .pruefung { width: 80%; height: 2.5rem; 
+    display: block; 
+    margin: auto; margin-top: 0.5rem; 
+    background: #6ca4ff;
+    transition: all 200ms ease-in-out;
+    font-size: 1.5em;
+    padding: 0.5rem;
+    font-weight: bold;
+    border: none;
+}
+#admin #startNewPruefCreate:hover,
+#admin #adminButtonContainer .pruefung:hover { 
+    background: #3482ff;
+    color: #f5f5f5;
+    font-weight: bolder;
+}
+#admin #adminButtonContainer .pruefung table { width: 100%; } 
+#admin #adminButtonContainer .pruefung table tr td:nth-of-type(2) { text-align: right; }
+/* #admin #adminButtonContainer .pruefung .text {  } */
+/* #admin #adminButtonContainer .pruefung .buttons {  } */
+#admin #adminButtonContainer .pruefung .buttons button { background: rgba(0, 0, 0, 0); border: none; width: 2rem; height: 2.5rem; }
+#admin #adminButtonContainer .pruefung .buttons button:active { color: white; }
+#admin #adminButtonContainer .pruefung .buttons button i { font-size: 2em; }
+
+#admin #startNewPruefCreate { margin-top: 4rem; width: 81%; height: 3rem; }
 
 
 /* ########################## */

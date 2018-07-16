@@ -26,7 +26,9 @@ window.onload = function() {
                 DOMendNotReady              = document.getElementById('endNotReady'),
                 DOMauswQuests               = document.getElementById('auswQuests'),
                 DOMevaluation               = document.getElementById('evaluation'),
-                DOMresult                   = document.getElementById('result');
+                DOMresult                   = document.getElementById('result'),
+                DOMadminButtonContainer     = document.getElementById('adminButtonContainer'),
+                DOMstartNewPruefCreate      = document.getElementById('startNewPruefCreate');
         // unten
         const pruefungen = extractPruefungen(pruefungsDaten);
         let selectedQuest = 0;
@@ -101,6 +103,7 @@ window.onload = function() {
                 case 'admin':
                     DOMadmin.hidden = false;
                     DOMadmin.classList.remove('hidden');
+                    generateAdminPruefungen();
                     break;
             
                 default:
@@ -229,7 +232,38 @@ window.onload = function() {
             }
         }
 
+        ////////// ADMIN /////////////
+        function generateAdminPruefungen() {
+            let outp = '';
+            for(const pruef in pruefungen) {
+                outp += generateAdminPruef(pruef);
+            }
+            DOMadminButtonContainer.innerHTML = outp;
 
+            const gears = document.getElementsByClassName('fa-gear');
+            for (const gear of gears) {
+                gear.parentElement.onmouseover = () => { gear.classList.add('fa-spin'); }
+                gear.parentElement.onmouseout = () => { gear.classList.remove('fa-spin'); }
+                // gear.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.onmouseover = () => { gear.classList.add('fa-spin'); }
+                // gear.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.onmouseout = () => { gear.classList.remove('fa-spin'); }
+            }
+        }
+        function generateAdminPruef(pruef) {
+            return `<div class="pruefung">
+                <table><tr>
+                    <td><span class="text">${pruef}</span></td>
+                    <td><span class="buttons">
+                        <button class="edit" type="button"><i class="fa fa-gear"></i></button>
+                        <button class="delete" type="button"><i class="fa fa-trash"></i></button>
+                    </span></td>
+                </tr></table>
+            </div>`;
+        }
+
+        function startNewPruefCreate() {
+            alert('new Pruef');
+        }
+        DOMstartNewPruefCreate.onclick = startNewPruefCreate;
 
         //////// INITIALISIERUNG ///////////
         switchTo('start');
