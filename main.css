@@ -38,7 +38,7 @@ button:hover { cursor: pointer; }
     color: #f5f5f5;
     font-weight: bolder;
 } 
-#start .adminlinkWrapper { width: 30%; height: 2rem; margin-top: 2rem; }
+#start .adminlinkWrapper { width: 30%; height: 2rem; margin-top: 2rem; padding-bottom: 4rem; }
 #start .adminlinkWrapper .adminlinklabel { transition: all 200ms ease-in-out; position: relative; bottom: -1.5rem; }
 #start .adminlinkWrapper:hover .adminlinklabel { font-size: 110%; bottom: 0; }
 #start .adminlinkWrapper .adminlinkPswWrapper { bottom: 0; }
@@ -262,6 +262,7 @@ button:hover { cursor: pointer; }
 
 /* ########################## */
 /* __________EDITOR__________ */
+#editor { height: 96vh; padding: 1rem; }
 #editor .header { font-size: 3em; margin: 1rem; text-decoration: underline; display: inline; }
 #editor #pruefNameEditor { width: 40%; height: 2rem; font-size: 1.5em; margin: 1rem; margin-top: 0; }
 
@@ -269,11 +270,28 @@ button:hover { cursor: pointer; }
     background: #3482ff;
     box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.7);
 }
-#editor #editorQuestWrapper .quest { width: 100%; margin: auto; background: rgb(31, 100, 190); }
+
+#editor #editorQuestWrapper .quest .questContainer { width: 98%; 
+    margin: auto; margin-top: 0.25rem; margin-bottom: 0.25rem; 
+    padding: 0.3rem; 
+    background: rgb(31, 100, 190); 
+}
+
+#editor #editorQuestWrapper .quest .questContainer.radioQuest .questField { width: 90%; height: 1rem; font-size: 1em; margin: 0.5rem; }
+#editor #editorQuestWrapper .quest .questContainer.radioQuest table,
+#editor #editorQuestWrapper .quest .questContainer.radioQuest table tr { width: 100%; }
+#editor #editorQuestWrapper .quest .questContainer.radioQuest table tr td:nth-of-type(1) { width: 10%; }
+#editor #editorQuestWrapper .quest .questContainer.radioQuest table tr td:nth-of-type(2) { width: 90%; }
+#editor #editorQuestWrapper .quest .questContainer.radioQuest table tr td .answers { width: 30%; }
+
+#editor #editorQuestWrapper .quest .questContainer.fieldQuest .questField { width: 60%; height: 1rem; font-size: 1em; margin: 0.5rem; }
+#editor #editorQuestWrapper .quest .questContainer.fieldQuest .amount { width: auto; }
+
 
 #editor .editorMaxFehlerWrapper { margin: 1rem; }
 #editor .editorMaxFehlerWrapper #editorMaxFehler { width: 2rem; }
-#editor #saveChanges { height: 4rem; font-size: 2em; padding: 1rem; margin: 1rem; background: #6ca4ff; font-weight: bold; display: block; border: none; }
+#editor #saveChanges { height: 4rem; font-size: 2em; padding: 1rem; margin: 1rem; background: #6ca4ff; font-weight: bold; display: block; border: none; transition: all 200ms ease-in-out; }
+#editor #saveChanges:hover { background: #3482ff; }
 
 
 /* ########################## */

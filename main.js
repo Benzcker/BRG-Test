@@ -30,7 +30,8 @@ window.onload = function() {
                 DOMresult                   = document.getElementById('result'),
                 DOMadminButtonContainer     = document.getElementById('adminButtonContainer'),
                 DOMpruefNameEditor          = document.getElementById('pruefNameEditor'),
-                DOMstartNewPruefCreate      = document.getElementById('startNewPruefCreate');
+                DOMstartNewPruefCreate      = document.getElementById('startNewPruefCreate'),
+                DOMeditorMaxFehler          = document.getElementById('editorMaxFehler');
         // unten
         const pruefungen = extractPruefungen(pruefungsDaten);
         let selectedQuest = 0;
@@ -269,19 +270,21 @@ window.onload = function() {
             </div>`;
         }
 
-        function startNewPruefCreate() {
-            openInEditor();
-        }
-        DOMstartNewPruefCreate.onclick = startNewPruefCreate;
-
-
+        
         ////////// EDITOR /////////////
         window.openInEditor = function(pruefName='') {
             switchTo('editor');
+            const pruef = pruefungen[pruefName];
+            
             DOMpruefNameEditor.value = pruefName;
+            DOMeditorMaxFehler.value = pruef ? pruef.maxMistakes : 0;
         }
 
+        // clicken auf neue Pruefung öffnet leeren editor
+        DOMstartNewPruefCreate.onclick = () => window.openInEditor();
+        
         //////// INITIALISIERUNG ///////////
         switchTo('start');
+        // switchTo('editor');
     });
 }
