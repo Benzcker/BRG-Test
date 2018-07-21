@@ -1,3 +1,16 @@
+:root {
+    --light: #7EA8FC;
+    --button-hover: #538CFF;
+    --button: #0659FF;
+    --highlight: #0547CC;
+    --background: #4885FD;
+    --background2: #0659FF;
+
+    --right: green;
+    --right-light: #61FE61;
+    --wrong: red;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -7,7 +20,13 @@ html, body {
     user-select: none; -webkit-user-select: none; /* DISABLE TEXT SELECTION */
 }
 
-button:hover { cursor: pointer; }
+button { background: var(--button); transition: all 200ms ease-in-out; 
+    color: white; border: none;
+}
+button:hover { background: var(--button-hover); cursor: pointer; }
+
+hr { height: 0; background: none; border-top: 2px solid rgba(0, 0, 0, 0.7); width: 95%; }
+
 
 /* ########################## */
 /* __________START___________ */
@@ -26,18 +45,10 @@ button:hover { cursor: pointer; }
 #start #buttonContainer { width: 100%; }
 #start #buttonContainer .nextButton { width: 80%; height: 3rem; 
     display: block; 
-    margin: auto; margin-top: 0.5rem; 
-    background: #6ca4ff;
-    transition: all 200ms ease-in-out;
+    margin: auto; margin-top: 0.5rem;
     font-size: 1.5em;
     font-weight: bold;
-    border: none;
 }
-#start #buttonContainer .nextButton:hover { 
-    background: #3482ff;
-    color: #f5f5f5;
-    font-weight: bolder;
-} 
 #start .adminlinkWrapper { width: 30%; height: 2rem; margin-top: 2rem; padding-bottom: 4rem; }
 #start .adminlinkWrapper .adminlinklabel { transition: all 200ms ease-in-out; position: relative; bottom: -1.5rem; }
 #start .adminlinkWrapper:hover .adminlinklabel { font-size: 110%; bottom: 0; }
@@ -47,8 +58,8 @@ button:hover { cursor: pointer; }
 #start .adminlinkWrapper .adminlinkPswWrapper #adminlinkPsw.wrong {
     border: 2px solid red;
 }
-#start .adminlinkWrapper #adminlink { background: #6ca4ff; border: none; margin: 0.2rem; }
-#start .adminlinkWrapper #adminlink:hover { background: #3482ff; }
+#start .adminlinkWrapper #adminlink { margin: 0.2rem; }
+
 
 /* ########################## */
 /* __________PRÜFUNG_________ */
@@ -79,27 +90,23 @@ button:hover { cursor: pointer; }
     margin-top: 2.5%;
 }
 
-#pruefung .logo { grid-area: pLogo; background: blue; }
+#pruefung .logo { grid-area: pLogo; background: var(--highlight); }
 #pruefung .header { grid-area: pTitle;
     text-align: center; 
     font-size: 4vh; 
     padding-top: 2.5%;
 }
 #pruefung .header h1 { display: inline; position: relative; top: 1vh; }
-#pruefung .header button { width: 100px; height: 60%; 
-    background: rgb(31, 100, 190); 
-    border-width: 0;
-    transition: all 100ms;
+#pruefung .header button { width: 100px; height: 60%;
     font-size: 120%;
 }
 #pruefung .header button:nth-of-type(1) { transform: scale(-1, 1); }
-#pruefung .header button:hover { background: rgb(174, 255, 171); }
 
-#pruefung .overview { grid-area: pOverview; background: rgb(193, 225, 255); overflow-x: hidden; }
+#pruefung .overview { grid-area: pOverview; background: var(--light); overflow-x: hidden; }
 #pruefung .overview ol { position: relative; left: -20px; width: 85%; }
 #pruefung .overview ol li { color: black; }
 #pruefung .overview ol li:hover { transform: scale(1.05, 1); cursor: pointer; }
-#pruefung .overview ol li.answered { color: rgb(0, 0, 207); }
+#pruefung .overview ol li.answered { color: var(--button); }
 #pruefung .overview ol li.selected { border: 2px solid black; }
 #pruefung .overview ol li.selected:hover { transform: scale(1, 1); cursor: default; }
 
@@ -115,19 +122,12 @@ button:hover { cursor: pointer; }
 }
 
 .endButton {
-    background: rgb(86, 233, 56);
-
     width: 250px;
     height: 8vh;
-    border-radius: 1vh;
-    border-width: 0;
-}
-.endButton:hover {
-    background: rgb(122, 255, 95); 
 }
 .endButtonWrapper { text-align: center; margin-top: 10vh; }
-.endButtonWrapper .answeredQuestions { font-size: 300%; margin-bottom: 4vh; color: red; }
-.endButtonWrapper .answeredQuestions.alldone { color: green; }
+.endButtonWrapper .answeredQuestions { font-size: 300%; margin-bottom: 4vh; color: var(--wrong); }
+.endButtonWrapper .answeredQuestions.alldone { color: var(--right); }
 .endButtonWrapper .endDescription {
     margin-bottom: 8vh;
     font-size: 130%;
@@ -137,13 +137,14 @@ button:hover { cursor: pointer; }
     margin: 1vh;
 }
 #auswertungsPsw.wrong {
-    border: 2px solid red;
+    border: 2px solid var(--wrong);
 }
 
 /* ########################## */
 /* ________AUSWERTUNG________ */
 #auswertung {
     width: 100%;
+    min-height: 96vh;
 }
 #auswertung .header { 
     height: 4rem;
@@ -154,15 +155,13 @@ button:hover { cursor: pointer; }
     position: relative;
     top: -1rem;
 }
-#auswertung .header hr { height: 0; background: none; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.7); width: 95%; }
 
 #auswertung .aQuests { 
     grid-area: aQuests;
-    background: #565dbb;
-    border-radius: 1rem;
-    width: 100%;
-    border-bottom: 3px solid black;
-    border-top: 2px solid black;
+    background: var(--background);
+
+    width: 94%; margin: auto; padding: 1%; 
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.7);
 
     padding-bottom: 1rem;
     padding-top: 1rem;
@@ -183,15 +182,15 @@ button:hover { cursor: pointer; }
     grid-template-rows: 100%;
 }
 
-#auswertung .aAnswer { color: red; }
+#auswertung .aAnswer { color: var(--wrong); }
 #auswertung .aAnswer.right,
 #auswertung .aAnswer .right 
-{ color: rgb(45, 255, 45); }
-#auswertung .aTrue { color: rgb(45, 255, 45); }
-#auswertung .aRight { color: red; }
+{ color: var(--right-light); }
+#auswertung .aTrue { color: var(--right-light); }
+#auswertung .aRight { color: var(--wrong); }
 #auswertung .aRight.right,
 #auswertung .aRight .right
-{ color: rgb(45, 255, 45); }
+{ color: var(--right-light); }
 
 
 #auswertung .aFinal { 
@@ -203,25 +202,17 @@ button:hover { cursor: pointer; }
     text-align: center;
 }
 #auswertung .aFinal .evaluation { margin: 1rem; }
-#auswertung .aFinal .result { color: red; margin: 1rem; font-weight: bolder; }
-#auswertung .aFinal .result.right { color: green; }
+#auswertung .aFinal .result { color: var(--wrong); margin: 1rem; font-weight: bolder; }
+#auswertung .aFinal .result.right { color: var(--right); }
 
 
 #auswertung .mainMenuButton {
-    background: rgb(86, 233, 56);
     margin-left: 20%;
     margin-top: 4rem;
     margin-bottom: 4rem;
     width: 60%;
     height: 3rem;
-
-    border-radius: 1vh;
-    border-width: 0;
 }
-#auswertung .mainMenuButton:hover {
-    background: rgb(122, 255, 95); 
-}
-
 
 /* ########################## */
 /* ___________ADMIN__________ */
@@ -236,7 +227,7 @@ button:hover { cursor: pointer; }
 #admin #adminButtonContainer .pruefung { width: 80%; height: 2.5rem; 
     display: block; 
     margin: auto; margin-top: 0.5rem; 
-    background: #6ca4ff;
+    background: var(--button);
     transition: all 200ms ease-in-out;
     font-size: 1.5em;
     padding: 0.5rem;
@@ -245,16 +236,15 @@ button:hover { cursor: pointer; }
 }
 #admin #startNewPruefCreate:hover,
 #admin #adminButtonContainer .pruefung:hover { 
-    background: #3482ff;
+    background: var(--button-hover);
     color: #f5f5f5;
     font-weight: bolder;
+    cursor: pointer;
 }
 #admin #adminButtonContainer .pruefung table { width: 100%; } 
 #admin #adminButtonContainer .pruefung table tr td:nth-of-type(2) { text-align: right; }
-/* #admin #adminButtonContainer .pruefung .text {  } */
-/* #admin #adminButtonContainer .pruefung .buttons {  } */
 #admin #adminButtonContainer .pruefung .buttons button { background: rgba(0, 0, 0, 0); border: none; width: 2rem; height: 2.5rem; text-decoration: none; }
-#admin #adminButtonContainer .pruefung .buttons button:active { color: white; }
+#admin #adminButtonContainer .pruefung .buttons button:active { color: #AAAAAA; }
 #admin #adminButtonContainer .pruefung .buttons button i { font-size: 2em; }
 
 #admin #startNewPruefCreate { margin-top: 4rem; width: 81%; height: 3rem; }
@@ -267,14 +257,15 @@ button:hover { cursor: pointer; }
 #editor #pruefNameEditor { width: 40%; height: 2rem; font-size: 1.5em; margin: 1rem; margin-top: 0; }
 
 #editor #editorQuestWrapper { width: 94%; margin: auto; padding: 1%; 
-    background: #3482ff;
+    background: var(--background);
     box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.7);
 }
 
 #editor #editorQuestWrapper .quest .questContainer { width: 98%; 
     margin: auto; margin-top: 0.25rem; margin-bottom: 0.25rem; 
     padding: 0.3rem; 
-    background: rgb(31, 100, 190); 
+    background: var(--background2); 
+    color: white;
 }
 
 #editor #editorQuestWrapper .quest .questContainer.radioQuest .questField { width: 90%; height: 1rem; font-size: 1em; margin: 0.5rem; }
@@ -290,8 +281,9 @@ button:hover { cursor: pointer; }
 
 #editor .editorMaxFehlerWrapper { margin: 1rem; }
 #editor .editorMaxFehlerWrapper #editorMaxFehler { width: 2rem; }
-#editor #saveChanges { height: 4rem; font-size: 2em; padding: 1rem; margin: 1rem; background: #6ca4ff; font-weight: bold; display: block; border: none; transition: all 200ms ease-in-out; }
-#editor #saveChanges:hover { background: #3482ff; }
+#editor #saveChanges { height: 4rem; font-size: 2em; padding: 1rem; margin: 1rem; font-weight: bold; display: block; }
+#editor #saveChanges:hover { background: var(--highlight); }
+#editor #saveChanges:active { color: #AAAAAA; }
 
 
 /* ########################## */
@@ -347,10 +339,16 @@ input[type=radio]:not(old):checked + label > span > span{
   margin           : 0.125em;
   border           : 0.0625em solid rgb(77, 97, 153);
   border-radius    : 0.125em;
-  background       : rgb(102, 121, 204);
+  background       : var(--button);
+  background-image :    -moz-linear-gradient(var(--button-hover),var(--button));
+  background-image :     -ms-linear-gradient(var(--button-hover),var(--button));
+  background-image :      -o-linear-gradient(var(--button-hover),var(--button));
+  background-image : -webkit-linear-gradient(var(--button-hover),var(--button));
+  background-image :         linear-gradient(var(--button-hover),var(--button));
+  /* background       : rgb(102, 121, 204);
   background-image :    -moz-linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204));
   background-image :     -ms-linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204));
   background-image :      -o-linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204));
   background-image : -webkit-linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204));
-  background-image :         linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204));
+  background-image :         linear-gradient(rgb(140, 164, 217),rgb(102, 138, 204)); */
 }
